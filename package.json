@@ -1,0 +1,41 @@
+{
+  "name": "mega-war",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./app/server.ts",
+  "scripts": {
+    "start": "ts-node ./app/server.ts",
+    "start:dev": "tsnd ./app/server.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomaszburas/Mega-War.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomaszburas/Mega-War/issues"
+  },
+  "homepage": "https://github.com/tomaszburas/Mega-War#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "method-override": "^3.0.0",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/method-override": "^0.0.32",
+    "@types/node": "^17.0.14",
+    "@types/uuid": "^8.3.4",
+    "dotenv": "^16.0.0",
+    "ts-node": "^10.4.0",
+    "ts-node-dev": "^1.1.8"
+  }
+}
