@@ -6,7 +6,7 @@
     "target": "ES6",
     "downlevelIteration": true,
     "lib": ["dom", "es6", "dom.iterable"],
-    "outDir": "dist",
+    "outDir": "client/dist",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "moduleResolution": "node",

@@ -1,4 +1,4 @@
-import {alertMsgNegative, alertMsgPositive} from "./alert";
+import {alertMsgNegative, alertMsgPositive} from "./alert.js";
 
 const formWrapper = document.querySelector('.container__wrapper');
 const formSubmit = formWrapper.querySelector('.btn');
@@ -21,21 +21,20 @@ formSubmit.addEventListener('click', async () => {
         body: JSON.stringify({
             username: username.value,
             password: password.value,
-            email: email.value}),
+        }),
     });
 
     if (res.status === 200) {
         username.value = '';
         password.value = '';
-        email.value = '';
 
         alertMsgPositive('Thanks for registration')
         setTimeout(() => {
             window.location.href = '/sign-in';
         }, 3000);
     } else {
-        const {error} = await res.json();
-        alertMsgNegative(error);
+        let {error} = await res.json();
+        typeof error === 'string' ? alertMsgNegative(error) : alertMsgNegative(error[0]);
         password.value = '';
     }
 });

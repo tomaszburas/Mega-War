@@ -7,7 +7,7 @@ formSubmit.addEventListener('click', async () => {
     const username: HTMLInputElement = formWrapper.querySelector('input[name="username"]');
     const password: HTMLInputElement = formWrapper.querySelector('input[name="password"]');
 
-    if (!username && !password) {
+    if (!username.value || !password.value) {
         return alertMsgNegative('Please enter your details')
     }
 
@@ -18,15 +18,15 @@ formSubmit.addEventListener('click', async () => {
         },
         body: JSON.stringify({
             username: username.value,
-            password: password.value
+            password: password.value,
         })
     });
 
     if (res.status === 200) {
-        window.location.href = '/app';
+        window.location.href = '/app/profile';
     } else {
         const {error} = await res.json();
-        alertMsgNegative(error);
+        typeof error === 'string' ? alertMsgNegative(error) : alertMsgNegative(error[0]);
         password.value = '';
 
     }

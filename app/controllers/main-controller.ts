@@ -1,5 +1,7 @@
 import {join} from "path";
-import {Request, Response} from "express";
+import {NextFunction, Request, Response} from "express";
+
+import {User} from "../db/models/user";
 
 export class MainController {
     static homePage(req: Request, res: Response) {
@@ -8,15 +10,61 @@ export class MainController {
         })
     }
 
-    static signUp(req: Request, res: Response) {
+    static signUpPage(req: Request, res: Response) {
         res.sendFile('sign-up.html', {
             root: join(__dirname, '../../client/html')
         })
     }
 
-    static signIn(req: Request, res: Response) {
+    static signInPage(req: Request, res: Response) {
         res.sendFile('sign-in.html', {
             root: join(__dirname, '../../client/html')
         })
+    }
+
+    static async signUp(req: Request, res: Response, next: NextFunction) {
+        const {username, password} = req.body;
+        try {
+            const newUser = new User({
+                username: username,
+                password: password,
+            });
+
+            await newUser.save();
+            res
+                .status(200)
+                .end()
+        } catch (err) {
+            if (err.name === 'ValidationError') {
+                err.message = Object.values(err.errors).map((val: any) => val.message);
+                next(err)
+            } else {
+                next(err);
+            }
+        }
+    }
+
+    static async signIn(req: Request, res: Response, next: NextFunction) {
+        try {
+            const user = await User.findOne({ username: req.body.username });
+            if (!user) {
+                throw new Error('User not found');
+            }
+
+            const isValidPassword = user.comparePassword(req.body.password);
+            if (!isValidPassword) {
+                throw new Error('Password not valid');
+            }
+            res
+                .status(200)
+                .end()
+        } catch (err) {
+            if (err.name === 'ValidationError') {
+                err.message = Object.values(err.errors).map((val: any) => val.message);
+                next(err)
+            } else {
+                next(err);
+            }
+        }
     }
 }

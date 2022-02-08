@@ -127,6 +127,7 @@
     padding: var(--padding-sm);
     background-color: var(--color-03);
     border-radius: .5rem;
+    color: var(--color-02)
 }
 
 .alert-text-positive {
