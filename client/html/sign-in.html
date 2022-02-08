@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!--CSS-->
-    <link rel="stylesheet" href="../css/pages/sign-up.css" />
+    <link rel="stylesheet" href="../css/pages/sign-in.css" />
     <!--FONT-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,7 +58,7 @@
     </header>
 
     <main class="container">
-        <h1 class="container__title">Welcome to Mega <span class="active">War</span>! 👊 </br>Let's begin the adventure</h1>
+        <h1 class="container__title">Sign in to Mega War ⚡</h1>
         <div class="container__wrapper">
             <label class="label">
                 <span class="label__txt">Username</span>
@@ -68,14 +68,15 @@
                 <span class="label__txt">Password</span>
                 <input type="password" name="password" class="label__input">
             </label>
-            <label class="label">
-                <span class="label__txt">E-mail</span>
-                <input type="email" name="email" class="label__input">
-            </label>
             <div class="container__btn">
-                <button class="btn active" title="Sign up">Sign up</button>
+                <button class="btn active" title="Sign in">Sign in</button>
             </div>
         </div>
+        <p class="create-account__wrapper">
+            <span class="create-account__txt--gray">New to Mega War?</span>
+            <a href="/sign-up" class="create-account__txt--purple cursor" title="Sign up">Create an account</a>
+            <span class="create-account__txt--gray">.</span>
+        </p>
     </main>
 
     <footer class="footer">
@@ -85,6 +86,6 @@
     </footer>
 </div>
 
-<script src="../ts/sign-up.ts"></script>
+<script src="../ts/sign-in.ts"></script>
 </body>
 </html>

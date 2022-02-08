@@ -8,6 +8,8 @@
     padding: var(--padding-sm) var(--padding-base);
 }
 
+/*--- HEADER ---*/
+
 .header {
     height: 6rem;
     display: flex;
@@ -19,6 +21,7 @@
 .header__btn__logo {
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .header__logo {
@@ -74,9 +77,31 @@
     padding: 0 var(--padding-sm);
 }
 
+/*--- CENTER ---*/
+
 .container {
     height: calc(100vh - 10rem - 2 * var(--padding-sm));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
+
+.container__wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn {
+    margin-top: var(--padding-sm);
+}
+
+/*--- FOOTER ---*/
 
 .footer {
     height: 4rem;
@@ -87,4 +112,25 @@
 
 .footer__text {
     cursor: pointer;
+}
+
+/*--- ALERT ---*/
+
+.alert {
+    position: absolute;
+    top: 5%;
+    display: flex;
+    justify-content: center;
+}
+
+.alert-text-negative {
+    padding: var(--padding-sm);
+    background-color: var(--color-03);
+    border-radius: .5rem;
+}
+
+.alert-text-positive {
+    padding: var(--padding-sm);
+    background-color: var(--color-06);
+    border-radius: .5rem;
 }

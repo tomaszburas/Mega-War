@@ -13,4 +13,10 @@ export class MainController {
             root: join(__dirname, '../../client/html')
         })
     }
+
+    static signIn(req: Request, res: Response) {
+        res.sendFile('sign-in.html', {
+            root: join(__dirname, '../../client/html')
+        })
+    }
 }
