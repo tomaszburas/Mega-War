@@ -1,0 +1,90 @@
+@import "./variables.css";
+@import "./root.css";
+
+.wrapper {
+    height: 100vh;
+    max-width: 1920px;
+    width: 100vw;
+    padding: var(--padding-sm) var(--padding-base);
+}
+
+.header {
+    height: 6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--font-size-xl);
+}
+
+.header__btn__logo {
+    display: flex;
+    align-items: center;
+}
+
+.header__logo {
+    height: 5rem;
+}
+
+.header__logo__text {
+    font-size: var(--font-size-3xl);
+    display: flex;
+    align-items: center;
+}
+
+.header__logo__text--red {
+    color: var(--color-02);
+    background-color: var(--color-03);
+    margin-left: .3rem;
+    padding: 0 var(--padding-sm);
+    font-size: var(--font-size-2xl)
+}
+
+.header__nav__ul {
+    display: flex;
+}
+
+.header__nav__li:not(:last-child) {
+    margin-right: var(--margin-sm);
+}
+
+.header__nav__li {
+    padding: 0 var(--padding-sm);
+}
+
+.header__nav__li:hover {
+    color: var(--color-02);
+    background-color: var(--color-03);
+}
+
+.header__nav__link {
+    cursor: pointer;
+}
+
+.header__user-nav__li:not(:last-child) {
+    margin-right: var(--margin-sm);
+}
+
+.header__user-nav__li {
+    padding: 0 var(--padding-sm);
+}
+
+.active {
+    color: var(--color-02);
+    background-color: var(--color-03);
+    padding: 0 var(--padding-sm);
+}
+
+.container {
+    height: calc(100vh - 10rem - 2 * var(--padding-sm));
+}
+
+.footer {
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.footer__text {
+    cursor: pointer;
+}

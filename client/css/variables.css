@@ -1,0 +1,37 @@
+:root {
+    /* Dark Mode */
+    --color-01: #242424;
+    --color-02: #FFFFFF;
+    --color-03: #A12A3D;
+    --color-04: #8EF4F8;
+    --color-05: #6D420B;
+    --color-06: #CBCC3F;
+
+    --font-size-sm: 1.4rem;
+    --font-size-base: 1.6rem;
+    --font-size-lg: 2rem;
+    --font-size-xl: 2.4rem;
+    --font-size-2xl: 2.8rem;
+    --font-size-3xl: 3.6rem;
+    --font-size-4xl: 6rem;
+
+    /* Test variables */
+    --padding-sm: 1rem;
+    --padding-base: 1.5rem;
+    --padding-lg: 2rem;
+    --padding-xl: 3rem;
+
+    --layout-padding-base: 5rem;
+
+    --transition-normal: 0.3s ease;
+
+    --margin-sm: 1rem;
+    --margin-base: 1.5rem;
+    --margin-lg: 2rem;
+    --margin-xl: 3rem;
+
+    --header-height: 4rem;
+    --footer-height: 2rem;
+
+    --border-radius: 1rem;
+}

@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!--CSS-->
-    <link rel="stylesheet" href="./css/pages/index.css" />
+    <link rel="stylesheet" href="../css/pages/sign-up.css" />
     <!--FONT-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,7 +55,26 @@
         </div>
     </header>
 
-    <main class="body"></main>
+    <main class="container">
+        <h1 class="container__title">Welcome to chatter! 👊 </br>Let's begin the adventure</h1>
+        <div class="container__wrapper">
+            <label class="label">
+                <span class="label__txt">Username</span>
+                <input type="text" name="username" class="label__input">
+            </label>
+            <label class="label">
+                <span class="label__txt">Password</span>
+                <input type="password" name="password" class="label__input">
+            </label>
+            <label class="label">
+                <span class="label__txt">E-mail</span>
+                <input type="email" name="email" class="label__input">
+            </label>
+            <div class="container__btn">
+                <button class="btn" title="Sign up">Sign up</button>
+            </div>
+        </div>
+    </main>
 
     <footer class="footer">
         <a href="https://github.com/tomaszburas" class="footer__text" title="GitHub">

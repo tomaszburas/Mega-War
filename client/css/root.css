@@ -1,0 +1,48 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    font-size: 10px; /* 1rem = 10px */
+}
+
+html {
+    font-size: 1rem;
+    /*background-color: var(--color-04);*/
+}
+
+body {
+    font-family: "Teko", sans-serif;
+    font-size: 1.6rem;
+    -webkit-tap-highlight-color: transparent;
+    color: var(--color-01);
+    background-color: var(--color-04);
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+
+a {
+    all: unset;
+}
+
+button,
+input[type="submit"],
+input[type="reset"] {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+}
+
+ol,
+ul {
+    list-style: none;
+}

@@ -5,5 +5,6 @@ const mainRouter = Router();
 
 mainRouter
     .get('/', MainController.homePage)
+    .get('/sign-up', MainController.signUp)
 
 export {mainRouter}

@@ -7,4 +7,10 @@ export class MainController {
             root: join(__dirname, '../../client')
         })
     }
+
+    static signUp(req: Request, res: Response) {
+        res.sendFile('sign-up.html', {
+            root: join(__dirname, '../../client/html')
+        })
+    }
 }
