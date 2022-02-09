@@ -5,5 +5,6 @@ export const appRouter = Router();
 appRouter.use(checkAuth);
 appRouter
     .get('/profile', AppController.profile)
-    .get('/configurator', AppController.configureWarriorPage);
+    .get('/configurator', AppController.configureWarriorPage)
+    .post('/configurator', AppController.configureWarrior);
 //# sourceMappingURL=app.js.map

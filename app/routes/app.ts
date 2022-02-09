@@ -9,3 +9,5 @@ appRouter.use(checkAuth)
 appRouter
     .get('/profile', AppController.profile)
     .get('/configurator', AppController.configureWarriorPage)
+
+    .post('/configurator', AppController.configureWarrior)
