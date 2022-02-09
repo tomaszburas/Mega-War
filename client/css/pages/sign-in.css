@@ -1,1 +1,10 @@
 @import "../main.css";
+
+.create-account__wrapper {
+    margin-top: var(--margin-base)
+}
+
+.create-account__txt--red {
+    color: var(--color-03);
+    cursor: pointer;
+}

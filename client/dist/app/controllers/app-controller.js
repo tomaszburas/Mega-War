@@ -1,8 +1,13 @@
 import { join } from "path";
 export class AppController {
-    static Profile(req, res) {
+    static profile(req, res) {
         res.sendFile('profile.html', {
-            root: join(__dirname, '../../client/html/app')
+            root: join(__dirname, '../../client/html')
+        });
+    }
+    static configureWarriorPage(req, res) {
+        res.sendFile('configurator.html', {
+            root: join(__dirname, '../../client/html')
         });
     }
 }

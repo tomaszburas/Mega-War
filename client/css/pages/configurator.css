@@ -1,0 +1,25 @@
+@import "../main.css";
+
+.label__txt {
+    margin-bottom: var(--margin-sm);
+    display: flex;
+    justify-content: space-between;
+}
+
+.label__txt--bold {
+    font-weight: bold;
+}
+
+.range-box {
+    margin-left: var(--margin-2xl)
+}
+
+.minus__btn {
+    cursor: pointer;
+    margin-right: var(--margin-sm);
+}
+
+.plus__btn {
+    cursor: pointer;
+    margin-left: var(--margin-sm);
+}

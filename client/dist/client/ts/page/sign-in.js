@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { alertMsgNegative } from "./alert.js";
+import { alertMsgNegative } from "../utils/alert.js";
 const formWrapper = document.querySelector('.container__wrapper');
 const formSubmit = formWrapper.querySelector('.btn');
 formSubmit.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {

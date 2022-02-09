@@ -1,7 +1,9 @@
 import {join} from "path";
 import {NextFunction, Request, Response} from "express";
+import * as jwt from "jsonwebtoken";
 
 import {User} from "../db/models/user";
+import {ACCESS_TOKEN} from "../config";
 
 export class MainController {
     static homePage(req: Request, res: Response) {
@@ -55,9 +57,20 @@ export class MainController {
             if (!isValidPassword) {
                 throw new Error('Password not valid');
             }
+
+            const payload = {
+                username: user.username,
+                id: String(user._id),
+            }
+
+            const token = jwt.sign(payload, ACCESS_TOKEN, {expiresIn: "1d"});
             res
                 .status(200)
-                .end()
+                .cookie(`access_token`, `${token}`, {
+                    httpOnly: true,
+                    maxAge: 24 * 60 * 60 * 1000,
+                })
+                .end();
         } catch (err) {
             if (err.name === 'ValidationError') {
                 err.message = Object.values(err.errors).map((val: any) => val.message);
@@ -66,5 +79,15 @@ export class MainController {
                 next(err);
             }
         }
+    }
+
+    static logout(req: Request, res: Response) {
+        res
+            .clearCookie('access_token')
+            .redirect('/sign-in')
+    }
+
+    static checkAuthorization(req: Request, res: Response) {
+        res.json(req.user)
     }
 }

@@ -45,16 +45,7 @@
             </ul>
         </nav>
 
-        <div class="header__user-nav">
-            <ul class="header__nav__ul">
-                <li class="header__user-nav__li">
-                    <a href="/sign-in" class="header__nav__link" title="Log in">LOG IN</a>
-                </li>
-                <li class="header__user-nav__li active">
-                    <a href="/sign-up" class="header__nav__link" title="Sign up">SIGN UP</a>
-                </li>
-            </ul>
-        </div>
+        <div class="header__user-nav"></div>
     </header>
 
     <main class="container">
@@ -73,9 +64,9 @@
             </div>
         </div>
         <p class="create-account__wrapper">
-            <span class="create-account__txt--gray">New to Mega War?</span>
-            <a href="/sign-up" class="create-account__txt--purple cursor" title="Sign up">Create an account</a>
-            <span class="create-account__txt--gray">.</span>
+            <span class="create-account__txt">New to Mega War?</span>
+            <a href="/sign-up" class="create-account__txt--red" title="Sign up">Create an account</a>
+            <span class="create-account__txt">.</span>
         </p>
     </main>
 
@@ -86,6 +77,7 @@
     </footer>
 </div>
 
-<script type="module" src="../dist/client/ts/sign-in.js"></script>
+<script type="module" src="../dist/client/ts/utils/header-init.js"></script>
+<script type="module" src="../dist/client/ts/page/sign-in.js"></script>
 </body>
 </html>

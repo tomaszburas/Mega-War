@@ -8,7 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { join } from "path";
+import * as jwt from "jsonwebtoken";
 import { User } from "../db/models/user";
+import { ACCESS_TOKEN } from "../config";
 export class MainController {
     static homePage(req, res) {
         res.sendFile('index.html', {
@@ -60,8 +62,17 @@ export class MainController {
                 if (!isValidPassword) {
                     throw new Error('Password not valid');
                 }
+                const payload = {
+                    username: user.username,
+                    id: String(user._id),
+                };
+                const token = jwt.sign(payload, ACCESS_TOKEN, { expiresIn: "1d" });
                 res
                     .status(200)
+                    .cookie(`access_token`, `${token}`, {
+                    httpOnly: true,
+                    maxAge: 24 * 60 * 60 * 1000,
+                })
                     .end();
             }
             catch (err) {
@@ -74,6 +85,14 @@ export class MainController {
                 }
             }
         });
+    }
+    static logout(req, res) {
+        res
+            .clearCookie('access_token')
+            .redirect('/sign-in');
+    }
+    static checkAuthorization(req, res) {
+        res.json(req.user);
     }
 }
 //# sourceMappingURL=main-controller.js.map
