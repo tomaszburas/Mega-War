@@ -28,13 +28,6 @@
 
 .container__box {
     display: flex;
-    width: 90%;
+    width: 100%;
     justify-content: center;
-}
-
-.container__wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 25%;
 }

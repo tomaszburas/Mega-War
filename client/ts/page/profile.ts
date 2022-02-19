@@ -6,6 +6,7 @@ const defense = document.querySelector('.defense');
 const resilience = document.querySelector('.resilience');
 const agility = document.querySelector('.agility');
 const totalPoints = document.querySelector('.max-points');
+const warriorImg = document.querySelector('.warrior-img') as HTMLImageElement;
 
 (async () => {
     const res = await fetch('/app/profile', {
@@ -15,14 +16,16 @@ const totalPoints = document.querySelector('.max-points');
         },
     });
 
-    const params = await res.json();
+    const userData = await res.json();
 
-    strength.textContent = params.strength;
-    defense.textContent = params.defense;
-    resilience.textContent = params.resilience;
-    agility.textContent = params.agility;
+    strength.textContent = userData.strength;
+    defense.textContent = userData.defense;
+    resilience.textContent = userData.resilience;
+    agility.textContent = userData.agility;
 
-    const total = 10 - (params.strength + params.defense + params.resilience + params.agility);
+    warriorImg.src = `../img/warriors/right/r-${userData.warrior}.svg`;
+
+    const total = 10 - (userData.strength + userData.defense + userData.resilience + userData.agility);
     totalPoints.textContent = `${total}`;
 
     configurePoints();
@@ -56,7 +59,6 @@ const totalPoints = document.querySelector('.max-points');
                 alertMsgPositive('Changes saved');
             }
         }
-
     })
 })();
 

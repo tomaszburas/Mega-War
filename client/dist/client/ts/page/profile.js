@@ -14,6 +14,7 @@ const defense = document.querySelector('.defense');
 const resilience = document.querySelector('.resilience');
 const agility = document.querySelector('.agility');
 const totalPoints = document.querySelector('.max-points');
+const warriorImg = document.querySelector('.warrior-img');
 (() => __awaiter(void 0, void 0, void 0, function* () {
     const res = yield fetch('/app/profile', {
         method: 'POST',
@@ -21,12 +22,13 @@ const totalPoints = document.querySelector('.max-points');
             'Content-Type': 'application/json',
         },
     });
-    const params = yield res.json();
-    strength.textContent = params.strength;
-    defense.textContent = params.defense;
-    resilience.textContent = params.resilience;
-    agility.textContent = params.agility;
-    const total = 10 - (params.strength + params.defense + params.resilience + params.agility);
+    const userData = yield res.json();
+    strength.textContent = userData.strength;
+    defense.textContent = userData.defense;
+    resilience.textContent = userData.resilience;
+    agility.textContent = userData.agility;
+    warriorImg.src = `../img/warriors/right/r-${userData.warrior}.svg`;
+    const total = 10 - (userData.strength + userData.defense + userData.resilience + userData.agility);
     totalPoints.textContent = `${total}`;
     configurePoints();
     const btn = document.querySelector('.btn');

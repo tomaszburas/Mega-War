@@ -21,15 +21,16 @@ export class AppController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const user = yield User.findOne({ _id: req.user.id });
-                const params = {
+                const userData = {
                     strength: user.params.strength,
                     defense: user.params.defense,
                     resilience: user.params.resilience,
                     agility: user.params.agility,
+                    warrior: user.warrior,
                 };
                 res
                     .status(200)
-                    .json(params);
+                    .json(userData);
             }
             catch (err) {
                 if (err.name === 'ValidationError') {

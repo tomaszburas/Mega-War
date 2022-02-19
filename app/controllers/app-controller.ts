@@ -15,16 +15,17 @@ export class AppController {
         try {
             const user = await User.findOne({_id: req.user.id})
 
-            const params = {
+            const userData = {
                 strength: user.params.strength,
                 defense: user.params.defense,
                 resilience: user.params.resilience,
                 agility: user.params.agility,
+                warrior: user.warrior,
             }
 
             res
                 .status(200)
-                .json(params)
+                .json(userData)
 
         } catch (err) {
             if (err.name === 'ValidationError') {

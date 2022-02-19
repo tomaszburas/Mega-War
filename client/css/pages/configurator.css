@@ -1,6 +1,13 @@
 @import "../main.css";
 @import "../points-configurator.css";
 
+.container__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25%;
+}
+
 .container__hero {
     margin-left: 3%;
     padding: var(--padding-base);
