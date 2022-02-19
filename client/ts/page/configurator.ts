@@ -5,6 +5,8 @@ const plus = [...document.querySelectorAll(".plus__btn")] as HTMLElement[];
 const minus = [...document.querySelectorAll(".minus__btn")] as HTMLElement[];
 const pointValue = document.querySelector(".max-points") as HTMLElement;
 
+const warriorName = ['aztec', 'celt', 'chinese', 'egyptian', 'greek', 'indian', 'slavic', 'viking']
+
 const btn = document.querySelector('.btn');
 
 totals.forEach((total, i) => {
@@ -76,7 +78,7 @@ btn.addEventListener('click', async () => {
 
     const warrior = warriors.find(warrior => warrior.checked)
 
-    if (total >= 11 || total <= 3) {
+    if (total >= 11 || total <= 3 || !warriorName.find(hero => hero === warrior.value)) {
         alertMsgNegative('Please don\'t cheat');
     } else {
         const res = await fetch('/app/configurator', {

@@ -12,6 +12,7 @@ const totals = [...document.querySelectorAll(".range-value")];
 const plus = [...document.querySelectorAll(".plus__btn")];
 const minus = [...document.querySelectorAll(".minus__btn")];
 const pointValue = document.querySelector(".max-points");
+const warriorName = ['aztec', 'celt', 'chinese', 'egyptian', 'greek', 'indian', 'slavic', 'viking'];
 const btn = document.querySelector('.btn');
 totals.forEach((total, i) => {
     minus[i].style.visibility = "hidden";
@@ -71,7 +72,7 @@ btn.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* 
     const warriors = [...document.querySelectorAll('input[name="warrior"]')];
     const total = (+strength.textContent) + (+defense.textContent) + (+resilience.textContent) + (+agility.textContent);
     const warrior = warriors.find(warrior => warrior.checked);
-    if (total >= 11 || total <= 3) {
+    if (total >= 11 || total <= 3 || !warriorName.find(hero => hero === warrior.value)) {
         alertMsgNegative('Please don\'t cheat');
     }
     else {

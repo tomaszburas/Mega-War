@@ -61,15 +61,22 @@ export class MainController {
             const payload = {
                 username: user.username,
                 id: String(user._id),
+                warrior: user.warrior,
             }
 
             const token = jwt.sign(payload, ACCESS_TOKEN, {expiresIn: "1d"});
+
+            if (user.warrior) {
+                res.status(200)
+            } else {
+                res.status(301)
+            }
+
             res
-                .status(200)
                 .cookie(`access_token`, `${token}`, {
-                    httpOnly: true,
-                    maxAge: 24 * 60 * 60 * 1000,
-                })
+                httpOnly: true,
+                maxAge: 24 * 60 * 60 * 1000,
+            })
                 .end();
         } catch (err) {
             if (err.name === 'ValidationError') {

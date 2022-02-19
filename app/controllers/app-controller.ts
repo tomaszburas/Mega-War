@@ -1,5 +1,8 @@
 import {join} from "path";
-import {Request, Response} from "express";
+import {NextFunction, Request, Response} from "express";
+import {User} from "../db/models/user";
+import * as jwt from "jsonwebtoken";
+import {ACCESS_TOKEN} from "../config";
 
 export class AppController {
     static profile(req: Request, res: Response) {
@@ -14,8 +17,44 @@ export class AppController {
         })
     }
 
-    static configureWarrior(req: Request, res: Response) {
-        const {strength, defense, resilience, agility} = req.body;
+    static async configureWarrior(req: Request, res: Response, next: NextFunction) {
+        const {strength, defense, resilience, agility, warrior} = req.body;
+
+        try {
+            const user = await User.findOne({_id: req.user.id})
+
+            user.params.strength = strength;
+            user.params.defense = defense;
+            user.params.resilience = resilience;
+            user.params.agility = agility;
+            user.warrior = warrior;
+
+            await user.save();
+
+            const payload = {
+                username: user.username,
+                id: String(user._id),
+                warrior: user.warrior,
+            }
+
+            const token = jwt.sign(payload, ACCESS_TOKEN, {expiresIn: "1d"});
+
+            res
+                .status(200)
+                .cookie(`access_token`, `${token}`, {
+                    httpOnly: true,
+                    maxAge: 24 * 60 * 60 * 1000,
+                })
+                .end()
+
+        } catch (err) {
+            if (err.name === 'ValidationError') {
+                err.message = Object.values(err.errors).map((val: any) => val.message);
+                next(err)
+            } else {
+                next(err);
+            }
+        }
 
         res
             .status(200)

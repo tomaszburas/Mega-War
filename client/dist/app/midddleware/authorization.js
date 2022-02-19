@@ -27,7 +27,7 @@ export function checkNotAuth(req, res, next) {
             res.redirect('/app/profile');
         }
         catch (err) {
-            next();
+            next(err);
         }
     }
     else {
@@ -47,7 +47,7 @@ export function getUser(req, res, next) {
         }
         catch (err) {
             req.user = null;
-            next();
+            next(err);
         }
     }
     else {

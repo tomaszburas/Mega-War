@@ -22,6 +22,7 @@ const userSchema = new Schema ({
         resilience: {type: Number, default: 0},
         agility: {type: Number, default: 0},
     },
+    warrior: {type: String, default: ''},
     wins: {type: Number, default: 0},
     loses: {type: Number, default: 0},
 });

@@ -29,6 +29,9 @@ formSubmit.addEventListener('click', () => __awaiter(void 0, void 0, void 0, fun
     if (res.status === 200) {
         window.location.href = '/app/profile';
     }
+    else if (res.status === 301) {
+        window.location.href = '/app/configurator';
+    }
     else {
         const { error } = yield res.json();
         typeof error === 'string' ? alertMsgNegative(error) : alertMsgNegative(error[0]);

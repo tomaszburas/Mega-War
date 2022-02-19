@@ -24,7 +24,10 @@ formSubmit.addEventListener('click', async () => {
 
     if (res.status === 200) {
         window.location.href = '/app/profile';
-    } else {
+    } else if (res.status === 301) {
+        window.location.href = '/app/configurator';
+    }
+    else {
         const {error} = await res.json();
         typeof error === 'string' ? alertMsgNegative(error) : alertMsgNegative(error[0]);
         password.value = '';

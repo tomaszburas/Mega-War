@@ -33,7 +33,7 @@ export function checkNotAuth(req: Request, res: Response, next: NextFunction) {
             jwt.verify(access_token, ACCESS_TOKEN);
             res.redirect('/app/profile');
         } catch (err) {
-            next();
+            next(err);
         }
     } else {
         next();
@@ -52,7 +52,7 @@ export function getUser(req: Request, res: Response, next: NextFunction) {
             next();
         } catch (err) {
             req.user = null;
-            next();
+            next(err);
         }
     } else {
         req.user = null;
