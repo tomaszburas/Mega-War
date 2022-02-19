@@ -1,0 +1,61 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+import { alertMsgNegative, alertMsgPositive } from "../utils/alert.js";
+import { configurePoints } from "../utils/points-configurator.js";
+const strength = document.querySelector('.strength');
+const defense = document.querySelector('.defense');
+const resilience = document.querySelector('.resilience');
+const agility = document.querySelector('.agility');
+const totalPoints = document.querySelector('.max-points');
+(() => __awaiter(void 0, void 0, void 0, function* () {
+    const res = yield fetch('/app/profile', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    const params = yield res.json();
+    strength.textContent = params.strength;
+    defense.textContent = params.defense;
+    resilience.textContent = params.resilience;
+    agility.textContent = params.agility;
+    const total = 10 - (params.strength + params.defense + params.resilience + params.agility);
+    totalPoints.textContent = `${total}`;
+    configurePoints();
+    const btn = document.querySelector('.btn');
+    btn.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
+        const strength = document.querySelector('.strength');
+        const defense = document.querySelector('.defense');
+        const resilience = document.querySelector('.resilience');
+        const agility = document.querySelector('.agility');
+        const total = (+strength.textContent) + (+defense.textContent) + (+resilience.textContent) + (+agility.textContent);
+        if (total >= 11 || total <= 3) {
+            alertMsgNegative('Please don\'t cheat');
+        }
+        else {
+            const res = yield fetch('/app/configurator', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    strength: strength.textContent,
+                    defense: defense.textContent,
+                    resilience: resilience.textContent,
+                    agility: agility.textContent,
+                })
+            });
+            if (res.status === 200) {
+                alertMsgPositive('Changes saved');
+            }
+        }
+    }));
+}))();
+//# sourceMappingURL=profile.js.map

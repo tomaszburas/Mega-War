@@ -5,10 +5,35 @@ import * as jwt from "jsonwebtoken";
 import {ACCESS_TOKEN} from "../config";
 
 export class AppController {
-    static profile(req: Request, res: Response) {
+    static profilePage(req: Request, res: Response) {
         res.sendFile('profile.html', {
             root: join(__dirname, '../../client/html')
         })
+    }
+
+    static async profile(req: Request, res: Response, next: NextFunction) {
+        try {
+            const user = await User.findOne({_id: req.user.id})
+
+            const params = {
+                strength: user.params.strength,
+                defense: user.params.defense,
+                resilience: user.params.resilience,
+                agility: user.params.agility,
+            }
+
+            res
+                .status(200)
+                .json(params)
+
+        } catch (err) {
+            if (err.name === 'ValidationError') {
+                err.message = Object.values(err.errors).map((val: any) => val.message);
+                next(err)
+            } else {
+                next(err);
+            }
+        }
     }
 
     static configureWarriorPage(req: Request, res: Response) {
@@ -27,7 +52,7 @@ export class AppController {
             user.params.defense = defense;
             user.params.resilience = resilience;
             user.params.agility = agility;
-            user.warrior = warrior;
+            user.warrior = warrior? warrior : user.warrior;
 
             await user.save();
 
@@ -56,8 +81,8 @@ export class AppController {
             }
         }
 
-        res
-            .status(200)
-            .end()
+        // res
+        //     .status(200)
+        //     .end()
     }
 }

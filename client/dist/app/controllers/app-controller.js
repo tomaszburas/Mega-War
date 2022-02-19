@@ -12,9 +12,34 @@ import { User } from "../db/models/user";
 import * as jwt from "jsonwebtoken";
 import { ACCESS_TOKEN } from "../config";
 export class AppController {
-    static profile(req, res) {
+    static profilePage(req, res) {
         res.sendFile('profile.html', {
             root: join(__dirname, '../../client/html')
+        });
+    }
+    static profile(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const user = yield User.findOne({ _id: req.user.id });
+                const params = {
+                    strength: user.params.strength,
+                    defense: user.params.defense,
+                    resilience: user.params.resilience,
+                    agility: user.params.agility,
+                };
+                res
+                    .status(200)
+                    .json(params);
+            }
+            catch (err) {
+                if (err.name === 'ValidationError') {
+                    err.message = Object.values(err.errors).map((val) => val.message);
+                    next(err);
+                }
+                else {
+                    next(err);
+                }
+            }
         });
     }
     static configureWarriorPage(req, res) {
@@ -31,7 +56,7 @@ export class AppController {
                 user.params.defense = defense;
                 user.params.resilience = resilience;
                 user.params.agility = agility;
-                user.warrior = warrior;
+                user.warrior = warrior ? warrior : user.warrior;
                 yield user.save();
                 const payload = {
                     username: user.username,
@@ -56,9 +81,9 @@ export class AppController {
                     next(err);
                 }
             }
-            res
-                .status(200)
-                .end();
+            // res
+            //     .status(200)
+            //     .end()
         });
     }
 }

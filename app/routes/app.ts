@@ -8,7 +8,8 @@ export const appRouter = Router();
 appRouter.use(checkAuth)
 
 appRouter
-    .get('/profile', checkNotWarrior, AppController.profile)
+    .get('/profile', checkNotWarrior, AppController.profilePage)
     .get('/configurator', checkWarrior, AppController.configureWarriorPage)
 
+    .post('/profile', AppController.profile)
     .post('/configurator', AppController.configureWarrior)
