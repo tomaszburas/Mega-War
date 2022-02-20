@@ -11,6 +11,7 @@ import { join } from "path";
 import * as jwt from "jsonwebtoken";
 import { User } from "../db/models/user";
 import { ACCESS_TOKEN } from "../config";
+import { UserError } from "../utils/errors";
 export class MainController {
     static homePage(req, res) {
         res.sendFile('index.html', {
@@ -56,11 +57,11 @@ export class MainController {
             try {
                 const user = yield User.findOne({ username: req.body.username });
                 if (!user) {
-                    throw new Error('User not found');
+                    throw new UserError('User not found');
                 }
                 const isValidPassword = user.comparePassword(req.body.password);
                 if (!isValidPassword) {
-                    throw new Error('Password not valid');
+                    throw new UserError('Password not valid');
                 }
                 const payload = {
                     username: user.username,

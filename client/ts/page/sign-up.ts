@@ -9,7 +9,7 @@ formSubmit.addEventListener('click', async () => {
     const email: HTMLInputElement = formWrapper.querySelector('input[name="email"]');
 
 
-    if (!username.value && !password.value && !email.value) {
+    if (!username.value && !password.value) {
         return alertMsgNegative('Please enter your details');
     }
 

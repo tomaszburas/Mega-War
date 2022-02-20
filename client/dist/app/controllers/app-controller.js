@@ -11,6 +11,7 @@ import { join } from "path";
 import { User } from "../db/models/user";
 import * as jwt from "jsonwebtoken";
 import { ACCESS_TOKEN } from "../config";
+import { UserError } from "../utils/errors";
 export class AppController {
     static profilePage(req, res) {
         res.sendFile('profile.html', {
@@ -22,11 +23,14 @@ export class AppController {
             try {
                 const user = yield User.findOne({ _id: req.user.id });
                 const userData = {
+                    username: user.username,
                     strength: user.params.strength,
                     defense: user.params.defense,
                     resilience: user.params.resilience,
                     agility: user.params.agility,
                     warrior: user.warrior,
+                    wins: user.wins,
+                    loses: user.loses,
                 };
                 res
                     .status(200)
@@ -53,10 +57,16 @@ export class AppController {
             const { strength, defense, resilience, agility, warrior } = req.body;
             try {
                 const user = yield User.findOne({ _id: req.user.id });
+                if (user.params.date) {
+                    const hours = Math.floor(Math.abs(Date.now() - user.params.date) / (60 * 60 * 1000));
+                    if (hours < 12)
+                        throw new UserError(`You can make changes one on 12 hours. Waiting ${12 - hours} hours`);
+                }
                 user.params.strength = strength;
                 user.params.defense = defense;
                 user.params.resilience = resilience;
                 user.params.agility = agility;
+                user.params.date = Date.now();
                 user.warrior = warrior ? warrior : user.warrior;
                 yield user.save();
                 const payload = {
@@ -82,9 +92,6 @@ export class AppController {
                     next(err);
                 }
             }
-            // res
-            //     .status(200)
-            //     .end()
         });
     }
 }

@@ -21,6 +21,7 @@ const userSchema = new Schema ({
         defense: {type: Number, default: 0},
         resilience: {type: Number, default: 0},
         agility: {type: Number, default: 0},
+        date: {type: Date},
     },
     warrior: {type: String, default: ''},
     wins: {type: Number, default: 0},

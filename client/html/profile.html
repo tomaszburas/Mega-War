@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!--ANIMATION-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <title>Mega War</title>
 </head>
 <body>
@@ -47,7 +49,7 @@
     </header>
 
     <main class="container">
-        <h1 class="container__title">Username</h1>
+        <h1 class="container__title"></h1>
 
         <div class="container__box">
             <div class="container__right">
@@ -101,7 +103,23 @@
                 </div>
             </div>
             <div class="container__center">
-                <img src="" alt="Warrior" class="warrior-img">
+                <div class="container__center__top">
+                    <p class="label-breed"></p>
+                    <img src="" alt="Warrior" class="warrior-img">
+                </div>
+                <div class="container__center__center">
+                    <div class="container__center__left">
+                        <p class="label-results">Wins</p>
+                        <p class="label-wins"></p>
+                    </div>
+                    <div class="container__center__right">
+                        <p class="label-results">Loses</p>
+                        <p class="label-loses"></p>
+                    </div>
+                </div>
+                <div class="container__center__bottom">
+                    <button class="arena-btn"><a href="/app/arena" title="Go Fight!">Go Fight!</a></button>
+                </div>
             </div>
         </div>
     </main>

@@ -14,7 +14,7 @@ formSubmit.addEventListener('click', () => __awaiter(void 0, void 0, void 0, fun
     const username = formWrapper.querySelector('input[name="username"]');
     const password = formWrapper.querySelector('input[name="password"]');
     const email = formWrapper.querySelector('input[name="email"]');
-    if (!username.value && !password.value && !email.value) {
+    if (!username.value && !password.value) {
         return alertMsgNegative('Please enter your details');
     }
     const res = yield fetch('/sign-up', {

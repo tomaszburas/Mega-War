@@ -17,9 +17,75 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 25%;
+    align-items: center;
+    width: 30%;
+}
+
+.container__center__top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+}
+
+.label-breed {
+    background-color: var(--color-05);
+    color: var(--color-02);
+    padding: 0 var(--padding-sm);
+    width: 100%;
+    text-align: center;
 }
 
 .warrior-img {
-    height: 30%;
+    width:100%;
+}
+
+.container__center__center {
+    display: flex;
+    background-color: var(--color-02);
+    padding: var(--padding-sm);
+    margin-top: var(--margin-sm);
+    width: 50%;
+    justify-content: space-evenly;
+}
+
+.container__center__left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container__center__right {
+    /*margin-left: var(--margin-sm);*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.label-results {
+    font-weight: bold;
+}
+
+.label-wins {
+    color: var(--color-02);
+    background-color: var(--color-06);
+    padding: 0 var(--padding-sm);
+}
+
+.label-loses {
+    color: var(--color-02);
+    background-color: var(--color-03);
+    padding: 0 var(--padding-sm);
+}
+
+.container__center__bottom {
+    margin-top: var(--margin-sm);
+}
+
+.arena-btn {
+    background-color: var(--color-05);
+    color: var(--color-02);
+    padding: 0 var(--padding-sm);
+    width: 100%;
+    text-align: center;
 }

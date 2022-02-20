@@ -3,6 +3,7 @@ import {NextFunction, Request, Response} from "express";
 import {User} from "../db/models/user";
 import * as jwt from "jsonwebtoken";
 import {ACCESS_TOKEN} from "../config";
+import {UserError} from "../utils/errors";
 
 export class AppController {
     static profilePage(req: Request, res: Response) {
@@ -16,11 +17,14 @@ export class AppController {
             const user = await User.findOne({_id: req.user.id})
 
             const userData = {
+                username: user.username,
                 strength: user.params.strength,
                 defense: user.params.defense,
                 resilience: user.params.resilience,
                 agility: user.params.agility,
                 warrior: user.warrior,
+                wins: user.wins,
+                loses: user.loses,
             }
 
             res
@@ -49,10 +53,16 @@ export class AppController {
         try {
             const user = await User.findOne({_id: req.user.id})
 
+            if (user.params.date) {
+                const hours = Math.floor(Math.abs(Date.now() - user.params.date) / (60*60*1000));
+                if (hours < 12) throw new UserError(`You can make changes one on 12 hours. Waiting ${12-hours} hours`);
+            }
+
             user.params.strength = strength;
             user.params.defense = defense;
             user.params.resilience = resilience;
             user.params.agility = agility;
+            user.params.date = Date.now()
             user.warrior = warrior? warrior : user.warrior;
 
             await user.save();
@@ -81,9 +91,5 @@ export class AppController {
                 next(err);
             }
         }
-
-        // res
-        //     .status(200)
-        //     .end()
     }
 }
