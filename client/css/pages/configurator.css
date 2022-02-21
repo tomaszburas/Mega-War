@@ -13,28 +13,19 @@
     padding: var(--padding-base);
     background-color: var(--color-06);
     width: 72%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    grid-template-rows: repeat(2, auto);
+    justify-items: center;
 }
 
 .hero-name {
-    margin-top: var(--margin-sm)
-}
-
-.hero__top {
-    display: flex;
-}
-
-.hero__bottom {
-    display: flex;
+    margin-top: var(--margin-sm);
+    padding: 0 var(--padding-sm);
 }
 
 .radio-image {
     width: 75%;
-    /*!*padding: var(--padding-base);*!*/
-    /*background-color: var(--color-02);*/
     -webkit-box-shadow: 0px 15px 30px 0px rgba(16,146,147,0.12);
     -moz-box-shadow: 0px 15px 30px 0px rgba(16,146,147,0.12);
     box-shadow: 0px 15px 30px 0px rgba(16,146,147,0.12);
@@ -46,12 +37,21 @@
     cursor: pointer;
 }
 
-.radio-hidden:checked ~ .radio-image {
+/*.radio-hidden:checked ~ .radio-image {*/
+/*    opacity: 0.6;*/
+/*}*/
+
+/*.radio-hidden:checked ~ .hero-name {*/
+/*    color: var(--color-02);*/
+/*    background-color: var(--color-05);*/
+/*    padding: 0 var(--padding-sm);*/
+/*}*/
+
+.radio-image-active {
     opacity: 0.6;
-    /*transform: scale(1.1);*/
 }
 
-.radio-hidden:checked ~ .hero-name {
+.hero-name-active {
     color: var(--color-02);
     background-color: var(--color-05);
     padding: 0 var(--padding-sm);
@@ -70,4 +70,15 @@
 }
 .radio-image:hover {
     transform: scale(1.03);
+}
+
+.wrapper__center {
+    text-align: center;
+}
+
+.hero-bonus__text {
+    margin-bottom: var(--margin-sm);
+    background-color: var(--color-05);
+    color: var(--color-02);
+    font-size: var(--font-size-base);
 }

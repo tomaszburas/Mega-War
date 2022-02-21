@@ -35,13 +35,14 @@ const warriorImg = document.querySelector('.warrior-img') as HTMLImageElement;
 
     warriorImg.src = `../img/warriors/right/r-${userData.warrior}.jpg`;
 
-    const total = 10 - (userData.strength + userData.defense + userData.resilience + userData.agility);
+    const total = 13 - (userData.strength + userData.defense + userData.resilience + userData.agility);
     totalPoints.textContent = `${total}`;
-
-    configurePoints();
 
     const btn = document.querySelector('.btn');
 
+    configurePoints(userData.warrior, false);
+
+    //@TODO
     btn.addEventListener('click', async () => {
         const strength = document.querySelector('.strength');
         const defense = document.querySelector('.defense');
@@ -77,7 +78,7 @@ const warriorImg = document.querySelector('.warrior-img') as HTMLImageElement;
                 agility.textContent = userData.agility;
                 const total = 10 - (userData.strength + userData.defense + userData.resilience + userData.agility);
                 totalPoints.textContent = `${total}`;
-                configurePoints();
+                // configurePoints();
             }
         }
     })
