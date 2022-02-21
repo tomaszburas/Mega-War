@@ -14,7 +14,7 @@ const warriors = [...document.querySelectorAll('.radio-container')];
 const bonusText = document.querySelector('.hero-bonus__text');
 const heroImg = [...document.querySelectorAll('.radio-image')];
 const heroName = [...document.querySelectorAll('.hero-name')];
-const checked = [...document.querySelectorAll('.radio-hidden')];
+const heroInput = [...document.querySelectorAll('.radio-hidden')];
 const heroBonusText = {
     aztec: `Aztec: +1S, +1R, +1A`,
     celt: `Celt: +1S, +1D, +1A`,
@@ -34,8 +34,7 @@ btn.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* 
     const warriors = [...document.querySelectorAll('input[name="warrior"]')];
     const warriorName = ['aztec', 'celt', 'chinese', 'egyptian', 'greek', 'indian', 'slavic', 'viking'];
     const total = (+strength.textContent) + (+defense.textContent) + (+resilience.textContent) + (+agility.textContent);
-    const warrior = warriors.find(warrior => warrior.checked);
-    console.log(warrior);
+    const warrior = warriors.find(warrior => warrior.getAttribute('checked') === 'true');
     if (total >= 14 || total <= 6 || !warriorName.find(hero => hero === warrior.value)) {
         alertMsgNegative('Please don\'t cheat');
     }
@@ -66,12 +65,12 @@ warriors.forEach((warrior, i) => {
             if (index === i) {
                 heroImg[index].classList.add('radio-image-active');
                 heroName[index].classList.add('hero-name-active');
-                checked[index].setAttribute('checked', 'true');
+                heroInput[index].setAttribute('checked', 'true');
             }
             else {
                 heroImg[index].classList.remove('radio-image-active');
                 heroName[index].classList.remove('hero-name-active');
-                checked[index].setAttribute('checked', 'false');
+                heroInput[index].setAttribute('checked', 'false');
             }
         });
         signBuilder();

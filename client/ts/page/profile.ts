@@ -1,5 +1,5 @@
 import {alertMsgNegative, alertMsgPositive} from "../utils/alert.js";
-import {configurePoints} from "../utils/points-configurator.js";
+import {configurePoints, signBuilder} from "../utils/points-configurator.js";
 
 const username = document.querySelector('.container__title');
 const breed = document.querySelector('.label-breed');
@@ -42,7 +42,6 @@ const warriorImg = document.querySelector('.warrior-img') as HTMLImageElement;
 
     configurePoints(userData.warrior, false);
 
-    //@TODO
     btn.addEventListener('click', async () => {
         const strength = document.querySelector('.strength');
         const defense = document.querySelector('.defense');
@@ -51,7 +50,7 @@ const warriorImg = document.querySelector('.warrior-img') as HTMLImageElement;
 
         const total = (+strength.textContent) + (+defense.textContent) + (+resilience.textContent) + (+agility.textContent);
 
-        if (total >= 11 || total <= 3) {
+        if (total >= 14 || total <= 7) {
             alertMsgNegative('Please don\'t cheat');
         } else {
             const res = await fetch('/app/configurator', {
@@ -76,9 +75,11 @@ const warriorImg = document.querySelector('.warrior-img') as HTMLImageElement;
                 defense.textContent = userData.defense;
                 resilience.textContent = userData.resilience;
                 agility.textContent = userData.agility;
-                const total = 10 - (userData.strength + userData.defense + userData.resilience + userData.agility);
+                const total = 13 - (userData.strength + userData.defense + userData.resilience + userData.agility);
                 totalPoints.textContent = `${total}`;
-                // configurePoints();
+
+                signBuilder();
+                configurePoints(userData.warrior, false);
             }
         }
     })

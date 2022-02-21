@@ -1,8 +1,6 @@
-export const totals = [...document.querySelectorAll(".range-value")];
-// export const plus = [...document.querySelectorAll(".plus__btn")] as HTMLElement[];
-// export const minus = [...document.querySelectorAll(".minus__btn")] as HTMLElement[];
+const totals = [...document.querySelectorAll(".range-value")];
 const pointValue = document.querySelector(".max-points");
-export const warriorBonusPoints = [
+const warriorBonusPoints = [
     { aztec: { strength: 1, defense: 0, resilience: 1, agility: 1 } },
     { celt: { strength: 1, defense: 1, resilience: 0, agility: 1 } },
     { chinese: { strength: 0, defense: 1, resilience: 1, agility: 1 } },
@@ -12,11 +10,12 @@ export const warriorBonusPoints = [
     { slavic: { strength: 1, defense: 1, resilience: 1, agility: 0 } },
     { viking: { strength: 1, defense: 1, resilience: 1, agility: 0 } },
 ];
-function initPoints(total, i, hero, type, warrior, minus, d) {
+const pointsTypeName = ['strength', 'defense', 'resilience', 'agility'];
+function initPoints(total, i, hero, type, warrior, minus, configurator) {
     if (total.classList.contains(type)) {
         const variable = warrior[hero];
         const result = 1 + variable[type];
-        if (d) {
+        if (configurator) {
             total.textContent = `${result}`;
         }
         if (total.textContent === `${result}`) {
@@ -24,17 +23,21 @@ function initPoints(total, i, hero, type, warrior, minus, d) {
         }
     }
 }
-export function configurePoints(hero = 'aztec', d) {
+export function configurePoints(hero = 'aztec', configurator) {
     const plus = [...document.querySelectorAll(".plus__btn")];
     const minus = [...document.querySelectorAll(".minus__btn")];
     const warrior = warriorBonusPoints.find(el => hero in el);
     totals.forEach((total, i) => {
-        initPoints(total, i, hero, 'strength', warrior, minus, d);
-        initPoints(total, i, hero, 'defense', warrior, minus, d);
-        initPoints(total, i, hero, 'resilience', warrior, minus, d);
-        initPoints(total, i, hero, 'agility', warrior, minus, d);
+        pointsTypeName.forEach(e => {
+            initPoints(total, i, hero, e, warrior, minus, configurator);
+        });
         const points = pointsCounter(13);
         pointValue.textContent = `${points}`;
+        if (points === 0) {
+            plus.forEach(val => {
+                val.style.visibility = 'hidden';
+            });
+        }
         minus[i].addEventListener('click', decPoints(total, i, minus, plus, hero, warrior));
         plus[i].addEventListener('click', incPoints(total, i, minus, plus, hero, warrior));
     });
@@ -89,7 +92,6 @@ function incPoints(total, i, minus, plus, hero, warrior) {
         let points = pointsCounter(13);
         pointValue.textContent = `${points}`;
         if (points === 0) {
-            console.log('wow');
             plus.forEach(val => {
                 val.style.visibility = 'hidden';
             });
@@ -124,69 +126,4 @@ function pointsCounter(points) {
     });
     return points;
 }
-// export function configurePoints() {
-//
-//     totals.forEach((total, i) => {
-//         if (total.textContent === '1') {
-//             minus[i].style.visibility = "hidden";
-//         }
-//         if (pointValue.textContent === '0') {
-//             plus[i].style.visibility = "hidden";
-//         }
-//
-//         minus[i].addEventListener('click', decPoints(total, i))
-//         plus[i].addEventListener('click', incPoints(total, i))
-//     })
-//
-//     function incPoints(total: HTMLElement, i: number) {
-//         return function listener() {
-//             let val = Number(total.textContent);
-//             val = val + 1;
-//             total.textContent = `${val}`;
-//
-//             let points = pointsCounter(totals, 10);
-//             pointValue.textContent = `${points}`;
-//
-//             if (points === 0) {
-//                 plus.forEach(val => {
-//                     val.style.visibility = 'hidden';
-//                 })
-//             }
-//
-//             if (+total.textContent <= 5) minus[i].style.visibility = 'visible';
-//             if (+total.textContent === 1) minus[i].style.visibility = 'hidden';
-//         }
-//     }
-//
-//     function decPoints(total: HTMLElement, i: number) {
-//         return function listener() {
-//             let val = Number(total.textContent);
-//             val = val - 1;
-//             total.textContent = `${val}`;
-//
-//             let points = pointsCounter(totals, 10);
-//             pointValue.textContent = `${points}`;
-//
-//             if (points === 6) {
-//                 minus.forEach(val => {
-//                     val.style.visibility = 'hidden';
-//                 })
-//             }
-//
-//             if (+total.textContent === 1) minus[i].style.visibility = 'hidden';
-//             if (+total.textContent >= 1) {
-//                 plus.forEach(val => {
-//                     val.style.visibility = 'visible';
-//                 })
-//             }
-//         }
-//     }
-//
-//     function pointsCounter(totals: HTMLElement[], points: number): number {
-//         totals.forEach((total) => {
-//             points -= Number(total.textContent);
-//         })
-//         return points;
-//     }
-// }
 //# sourceMappingURL=points-configurator.js.map

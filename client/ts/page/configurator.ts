@@ -2,11 +2,11 @@ import {alertMsgNegative} from "../utils/alert.js";
 import {configurePoints, signBuilder} from "../utils/points-configurator.js";
 
 const btn = document.querySelector('.btn');
-const warriors = [...document.querySelectorAll('.radio-container')] as HTMLElement[];
+const warriors = [...document.querySelectorAll('.radio-container')] as HTMLLabelElement[];
 const bonusText = document.querySelector('.hero-bonus__text');
 const heroImg = [...document.querySelectorAll('.radio-image')] as HTMLImageElement[];
 const heroName = [...document.querySelectorAll('.hero-name')] as HTMLSpanElement[];
-const checked = [...document.querySelectorAll('.radio-hidden')] as HTMLInputElement[];
+const heroInput = [...document.querySelectorAll('.radio-hidden')] as HTMLInputElement[];
 
 const heroBonusText: { [key: string]: string } = {
     aztec: `Aztec: +1S, +1R, +1A`,
@@ -31,8 +31,7 @@ btn.addEventListener('click', async () => {
 
     const total = (+strength.textContent) + (+defense.textContent) + (+resilience.textContent) + (+agility.textContent);
 
-    const warrior = warriors.find(warrior => warrior.checked)
-    console.log(warrior);
+    const warrior = warriors.find(warrior => warrior.getAttribute('checked') === 'true')
 
     if (total >= 14 || total <= 6 || !warriorName.find(hero => hero === warrior.value)) {
         alertMsgNegative('Please don\'t cheat');
@@ -65,11 +64,11 @@ warriors.forEach((warrior, i) => {
             if (index === i) {
                 heroImg[index].classList.add('radio-image-active');
                 heroName[index].classList.add('hero-name-active');
-                checked[index].setAttribute('checked', 'true');
+                heroInput[index].setAttribute('checked', 'true');
             } else {
                 heroImg[index].classList.remove('radio-image-active')
                 heroName[index].classList.remove('hero-name-active')
-                checked[index].setAttribute('checked', 'false');
+                heroInput[index].setAttribute('checked', 'false');
             }
         })
 

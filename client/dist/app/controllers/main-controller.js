@@ -30,8 +30,10 @@ export class MainController {
     }
     static signUp(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { username, password } = req.body;
+            const { username, password, result } = req.body;
             try {
+                if (+result !== 7)
+                    throw new UserError('Bad result of 2+5');
                 const newUser = new User({
                     username: username,
                     password: password,

@@ -1,5 +1,6 @@
 import * as mongoose from 'mongoose';
 import * as bcrypt from 'bcrypt';
+import { UserError } from "../../utils/errors";
 const Schema = mongoose.Schema;
 const userSchema = new Schema({
     username: {
@@ -25,6 +26,8 @@ const userSchema = new Schema({
     loses: { type: Number, default: 0 },
 });
 userSchema.pre('save', function (next) {
+    if (!validatePassword(this.password))
+        throw new UserError('Password must contains minimum 5 characters, at least one letter and one number');
     const salt = bcrypt.genSaltSync(10);
     this.password = bcrypt.hashSync(this.password, salt);
     next();
@@ -43,5 +46,8 @@ userSchema.methods = {
         return bcrypt.compareSync(password, this.password);
     }
 };
+function validatePassword(password) {
+    return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/.test(password);
+}
 export const User = mongoose.model('User', userSchema);
 //# sourceMappingURL=user.js.map

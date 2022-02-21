@@ -59,8 +59,8 @@ export class AppController {
                 const user = yield User.findOne({ _id: req.user.id });
                 if (user.params.date) {
                     const hours = Math.floor(Math.abs(Date.now() - user.params.date) / (60 * 60 * 1000));
-                    if (hours < 12)
-                        throw new UserError(`You can make changes one on 12 hours. Waiting ${12 - hours} hours`);
+                    if (hours < 3)
+                        throw new UserError(`You can make changes one on 3 hours (${3 - hours} hours left)`);
                 }
                 user.params.strength = strength;
                 user.params.defense = defense;

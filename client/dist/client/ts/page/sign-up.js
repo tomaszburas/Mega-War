@@ -13,32 +13,36 @@ const formSubmit = formWrapper.querySelector('.btn');
 formSubmit.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
     const username = formWrapper.querySelector('input[name="username"]');
     const password = formWrapper.querySelector('input[name="password"]');
-    const email = formWrapper.querySelector('input[name="email"]');
-    if (!username.value && !password.value) {
+    const result = formWrapper.querySelector('input[name="result"]');
+    if (!username.value || !password.value) {
         return alertMsgNegative('Please enter your details');
     }
-    const res = yield fetch('/sign-up', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            username: username.value,
-            password: password.value,
-        }),
-    });
-    if (res.status === 200) {
-        username.value = '';
-        password.value = '';
-        alertMsgPositive('Thanks for registration');
-        setTimeout(() => {
-            window.location.href = '/sign-in';
-        }, 3000);
-    }
     else {
-        let { error } = yield res.json();
-        typeof error === 'string' ? alertMsgNegative(error) : alertMsgNegative(error[0]);
-        password.value = '';
+        console.log('hola');
+        const res = yield fetch('/sign-up', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: username.value,
+                password: password.value,
+                result: result.value,
+            }),
+        });
+        if (res.status === 200) {
+            username.value = '';
+            password.value = '';
+            alertMsgPositive('Thanks for registration');
+            setTimeout(() => {
+                window.location.href = '/sign-in';
+            }, 3000);
+        }
+        else {
+            let { error } = yield res.json();
+            typeof error === 'string' ? alertMsgNegative(error) : alertMsgNegative(error[0]);
+            password.value = '';
+        }
     }
 }));
 //# sourceMappingURL=sign-up.js.map
