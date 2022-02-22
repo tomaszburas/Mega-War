@@ -53,24 +53,65 @@
 
     <main class="container">
         <h1 class="container__title">Fighting Arena ⚔</h1>
-        <div class="container__wrapper">
-<!--            <label class="label">-->
-<!--                <span class="label__txt">Username</span>-->
-<!--                <input type="text" name="username" class="label__input">-->
-<!--            </label>-->
-<!--            <label class="label">-->
-<!--                <span class="label__txt">Password</span>-->
-<!--                <input type="password" name="password" class="label__input">-->
-<!--            </label>-->
-<!--            <div class="container__btn">-->
-<!--                <button class="btn active" title="Sign in">Sign in</button>-->
+        <div class="arena">
+            <div class="player player1">
+                <p class="player__name">XXX</p>
+                <img src="../img/warriors/right/r-aztec.svg" alt="Warrior1" class="player__img">
+            </div>
+            <div class="arena__center">
+                <p class="arena__vs">VS</p>
+                <button class="btn active start-fight" title="Start fight">Start Fight</button>
+            </div>
+<!--            <div class="player player2">-->
+<!--                <p class="player__name">XXX3</p>-->
+<!--                <img src="../img/warriors/left/l-chinese.svg" alt="Warrior2" class="player__img">-->
 <!--            </div>-->
-<!--        </div>-->
-<!--        <p class="create-account__wrapper">-->
-<!--            <span class="create-account__txt">New to Mega War?</span>-->
-<!--            <a href="/sign-up" class="create-account__txt&#45;&#45;red" title="Sign up">Create an account</a>-->
-<!--            <span class="create-account__txt">.</span>-->
-<!--        </p>-->
+
+            <div class="arena__opponent">
+                <h2 class="opponent__title">Find your opponent</h2>
+                <div class="opponent__username">
+                    <label class="arena__label">
+                        <span class="arena__label__txt">Username</span>
+                        <input type="text" name="username" class="label__input">
+                    </label>
+                    <button class="btn active" title="Find opponent">Find</button>
+                </div>
+                <button class="btn active random-opponent" title="Random opponent">Random opponent</button>
+            </div>
+        </div>
+        <div class="container__wrapper">
+            <div class="fight__stats">
+                <ol class="fight-ol">
+                    <li class="fight-text">Batman zadał obrażenia tomtek w wysokości 4</li>
+                    <li class="fight-text">tomtek zadał obrażenia Batman w wysokości 3</li>
+                    <li class="fight-text">Batman zadał obrażenia tomtek w wysokości 4</li>
+                    <li class="fight-text">tomtek zadał obrażenia Batman w wysokości 3</li>
+                    <li class="fight-text">Batman zadał obrażenia tomtek w wysokości 4</li>
+                    <li class="fight-text">tomtek zadał obrażenia Batman w wysokości 3</li>
+                    <li class="fight-text">Batman zadał obrażenia tomtek w wysokości 4</li>
+                    <li class="fight-text">tomtek zadał obrażenia Batman w wysokości 3</li>
+                    <li class="fight-text">Batman zadał obrażenia tomtek w wysokości 4</li>
+                    <li class="fight-text">tomtek zadał obrażenia Batman w wysokości 3</li>
+                    <li class="fight-text">Batman zadał obrażenia tomtek w wysokości 4</li>
+                    <li class="fight-text">tomtek zadał obrażenia Batman w wysokości 3</li>
+                    <li class="fight-text">Batman zadał obrażenia tomtek w wysokości 4</li>
+                    <li class="fight-text">tomtek zadał obrażenia Batman w wysokości 3</li>
+                    <li class="fight-text">Batman zadał obrażenia tomtek w wysokości 4</li>
+                    <li class="fight-text">tomtek zadał obrażenia Batman w wysokości 3</li>
+                    <li class="fight-text">Batman zadał obrażenia tomtek w wysokości 4</li>
+                    <li class="fight-text">tomtek zadał obrażenia Batman w wysokości 3</li>
+                </ol>
+            </div>
+            <div class="fight__results">
+                <div class="results__box">
+                    <p class="results__title">Winner 🎉</p>
+                    <p class="results__username">Tomaszenko</p>
+                    <p class="results__breed">egyptian</p>
+                    <img src="../img/warriors/right/r-egyptian.jpg" alt="Warrior" class="warrior-img">
+                </div>
+                <button class="active btn__close" title="Close">Close</button>
+            </div>
+        </div>
     </main>
 
     <footer class="footer">

@@ -1,1 +1,159 @@
 @import "../main.css";
+
+.arena {
+    background-image: url("../../img/arena.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 100%;
+    max-width: 1020px;
+    height: 100%;
+    max-height: 460px;
+    background-position: center center;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.arena__center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.arena__vs {
+    color: var(--color-03);
+    background-color: var(--color-02);
+    padding: 0 var(--padding-sm);
+    margin-bottom: var(--margin-base);
+}
+
+.player {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    justify-content: center;
+    align-items: center;
+}
+
+.player__name {
+    background-color: var(--color-06);
+    padding: 0 var(--padding-sm);
+    margin-bottom: var(--margin-base);
+}
+
+.player__img {
+    width: 60%;
+}
+
+.arena__opponent {
+    display: flex;
+    flex-direction: column;
+    padding: var(--padding-base);
+    background-color: var(--color-06);
+}
+
+.opponent__title {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--margin-sm);
+    text-align: center;
+}
+
+.arena__label {
+    display: flex;
+    flex-direction: column;
+    margin-right: var(--margin-sm)
+}
+
+.arena__label__txt {
+    font-size: var(--font-size-base)
+}
+
+.opponent__username {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--margin-sm);
+}
+
+.fight-ol {
+    list-style-type: decimal;
+    padding-left: var(--padding-base);
+    height: 100%;
+}
+
+.fight-li {
+
+}
+
+.container__wrapper {
+    max-height: calc(100vh - 10rem - 2 * var(--padding-sm));
+    width: 100%;
+    max-width: 1020px;
+    display: none;
+    flex-direction: row;
+    position: absolute;
+}
+
+.fight__stats {
+    overflow-y: auto;
+    background: var(--color-02);
+    width: 50%;
+    padding-left: var(--padding-base);
+    display: flex;
+    align-items: center;
+}
+
+.fight__results {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.btn__close {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.results__box {
+    background-color: var(--color-02);
+    padding: 0 var(--padding-sm);
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.results__username {
+    background-color: var(--color-04);
+    width: 100%;
+    text-align: center;
+}
+
+.results__breed {
+    background-color: var(--color-05);
+    width: 100%;
+    text-align: center;
+    color: var(--color-02);
+}
+
+.warrior-img {
+    width: 100%;
+}
+
+.fight__stats::-webkit-scrollbar {
+    width: 10px;
+}
+
+.fight__stats::-webkit-scrollbar-track {
+    background-color: #e4e4e4;
+}
+
+.fight__stats::-webkit-scrollbar-thumb {
+    background-color: var(--color-05);
+}
+
+
+
