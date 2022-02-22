@@ -12,7 +12,9 @@ appRouter
     .get('/configurator', checkWarrior, AppController.configureWarriorPage)
     .get('/arena', checkNotWarrior, AppController.arenaPage)
     .get('/arena/player1', checkNotWarrior, AppController.arenaPlayer1)
-    .get('/profile/hero', AppController.profileHero)
+    .get('/profile/hero', checkNotWarrior, AppController.profileHero)
+    .get('/arena/player2-random', checkNotWarrior, AppController.arenaPlayer2Random)
 
     .post('/configurator', AppController.configureWarrior)
-    .post('/arena/player2', AppController.arenaPlayer2)
+    .post('/arena/player2', AppController.arenaPlayer2Username)
+    .post('/arena/fight', AppController.arenaFight)

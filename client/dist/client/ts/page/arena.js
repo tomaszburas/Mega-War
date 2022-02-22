@@ -20,6 +20,7 @@ const player2Img = player2.querySelector('.player__img');
 const findOpponentBtn = document.querySelector('.btn__find');
 const findOpponentInput = document.querySelector('.label__input');
 const findOpponentBox = document.querySelector('.arena__opponent');
+const findOpponentBtnRandom = document.querySelector('.random-opponent');
 let player2Username = '';
 // 1 PLAYER INIT
 (() => __awaiter(void 0, void 0, void 0, function* () {
@@ -28,7 +29,7 @@ let player2Username = '';
     player1Name.textContent = userData.username;
     player1Img.src = `../img/warriors/right/r-${userData.warrior}.svg`;
 }))();
-// 2 PLAYER INIT
+// 2 PLAYER INIT USERNAME
 function player2Init(username, breed) {
     findOpponentBox.style.display = 'none';
     player2.style.display = 'flex';
@@ -60,9 +61,45 @@ function findOpponent() {
     });
 }
 findOpponentBtn.addEventListener('click', findOpponent);
+// 2 PLAYER INIT RANDOM
+function findOpponentRandom() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const res = yield fetch('/app/arena/player2-random');
+        if (res.status === 200) {
+            const data = yield res.json();
+            player2Username = data.username;
+            player2Init(data.username, data.warrior);
+        }
+        else {
+            const { error } = yield res.json();
+            typeof error === 'string' ? alertMsgNegative(error) : alertMsgNegative(error[0]);
+        }
+    });
+}
+findOpponentBtnRandom.addEventListener('click', findOpponentRandom);
 // START FIGHT BUTTON
 function startFight() {
-    fightStatsDiv.style.display = 'flex';
+    return __awaiter(this, void 0, void 0, function* () {
+        const res = yield fetch('/app/arena/fight', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                player2: player2Username,
+            })
+        });
+        if (res.status === 200) {
+            const data = yield res.json();
+            console.log(data);
+        }
+        else {
+            const { error } = yield res.json();
+            typeof error === 'string' ? alertMsgNegative(error) : alertMsgNegative(error[0]);
+            findOpponentInput.value = '';
+        }
+        fightStatsDiv.style.display = 'flex';
+    });
 }
 startFightBtn.addEventListener('click', startFight);
 // FIGHT STATS CLOSE BUTTON
@@ -71,6 +108,7 @@ function closeFightStats() {
     findOpponentBox.style.display = 'flex';
     player2.style.display = 'none';
     findOpponentInput.value = '';
+    startFightBtn.style.display = 'none';
 }
 fightStatsCloseBtn.addEventListener('click', closeFightStats);
 //# sourceMappingURL=arena.js.map

@@ -5,6 +5,7 @@ import * as jwt from "jsonwebtoken";
 import {ACCESS_TOKEN} from "../config";
 import {UserError} from "../midddleware/errors";
 import {msToTime} from "../utils/ms-to-time"
+import {fight, Warrior} from "../utils/fight";
 
 export class AppController {
     static profilePage(req: Request, res: Response) {
@@ -125,7 +126,7 @@ export class AppController {
         }
     }
 
-    static async arenaPlayer2(req: Request, res: Response, next: NextFunction) {
+    static async arenaPlayer2Username(req: Request, res: Response, next: NextFunction) {
         try {
             const user = await User.findOne({username: req.body.username})
             if (!user) throw new UserError('User with the given username does not exist')
@@ -138,6 +139,50 @@ export class AppController {
             res
                 .status(200)
                 .json(userData)
+
+        } catch (err) {
+            if (err.name === 'ValidationError') {
+                err.message = Object.values(err.errors).map((val: any) => val.message);
+                next(err)
+            } else {
+                next(err);
+            }
+        }
+    }
+
+    static async arenaPlayer2Random(req: Request, res: Response, next: NextFunction) {
+        try {
+            const users = await User.find({username: {$ne: req.user.username}, warrior: {$ne: req.user.warrior}});
+
+            const randomIndex = Math.floor(Math.random() * users.length);
+            const userData = {
+                username: users[randomIndex].username,
+                warrior: users[randomIndex].warrior,
+            }
+            res
+                .status(200)
+                .json(userData)
+
+        } catch (err) {
+            if (err.name === 'ValidationError') {
+                err.message = Object.values(err.errors).map((val: any) => val.message);
+                next(err)
+            } else {
+                next(err);
+            }
+        }
+    }
+
+    static async arenaFight(req: Request, res: Response, next: NextFunction) {
+        try {
+            const player1 = (await User.find({username: {$eq: req.user.username}}))[0] as Warrior;
+            const player2 = (await User.find({username: {$eq: req.body.player2}}))[0] as Warrior;
+
+            const data = fight(player1, player2)
+
+            res
+                .status(200)
+                .json(data)
 
         } catch (err) {
             if (err.name === 'ValidationError') {

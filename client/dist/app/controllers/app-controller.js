@@ -13,6 +13,7 @@ import * as jwt from "jsonwebtoken";
 import { ACCESS_TOKEN } from "../config";
 import { UserError } from "../midddleware/errors";
 import { msToTime } from "../utils/ms-to-time";
+import { fight } from "../utils/fight";
 export class AppController {
     static profilePage(req, res) {
         res.sendFile('profile.html', {
@@ -125,7 +126,7 @@ export class AppController {
             }
         });
     }
-    static arenaPlayer2(req, res, next) {
+    static arenaPlayer2Username(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const user = yield User.findOne({ username: req.body.username });
@@ -138,6 +139,51 @@ export class AppController {
                 res
                     .status(200)
                     .json(userData);
+            }
+            catch (err) {
+                if (err.name === 'ValidationError') {
+                    err.message = Object.values(err.errors).map((val) => val.message);
+                    next(err);
+                }
+                else {
+                    next(err);
+                }
+            }
+        });
+    }
+    static arenaPlayer2Random(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const users = yield User.find({ username: { $ne: req.user.username }, warrior: { $ne: req.user.warrior } });
+                const randomIndex = Math.floor(Math.random() * users.length);
+                const userData = {
+                    username: users[randomIndex].username,
+                    warrior: users[randomIndex].warrior,
+                };
+                res
+                    .status(200)
+                    .json(userData);
+            }
+            catch (err) {
+                if (err.name === 'ValidationError') {
+                    err.message = Object.values(err.errors).map((val) => val.message);
+                    next(err);
+                }
+                else {
+                    next(err);
+                }
+            }
+        });
+    }
+    static arenaFight(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const player1 = (yield User.find({ username: { $eq: req.user.username } }))[0];
+                const player2 = (yield User.find({ username: { $eq: req.body.player2 } }))[0];
+                const data = fight(player1, player2);
+                res
+                    .status(200)
+                    .json(data);
             }
             catch (err) {
                 if (err.name === 'ValidationError') {

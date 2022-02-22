@@ -2,7 +2,6 @@ import * as mongoose from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import {NextFunction} from "express";
 import {MongoServerError} from "mongodb";
-import {UserError} from "../../midddleware/errors";
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema ({

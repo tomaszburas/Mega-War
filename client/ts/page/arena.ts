@@ -12,6 +12,7 @@ const player2Img = player2.querySelector('.player__img') as HTMLImageElement;
 const findOpponentBtn = document.querySelector('.btn__find') as HTMLButtonElement;
 const findOpponentInput = document.querySelector('.label__input') as HTMLInputElement;
 const findOpponentBox = document.querySelector('.arena__opponent') as HTMLDivElement;
+const findOpponentBtnRandom = document.querySelector('.random-opponent') as HTMLButtonElement;
 
 let player2Username = '';
 
@@ -24,7 +25,7 @@ let player2Username = '';
     player1Img.src = `../img/warriors/right/r-${userData.warrior}.svg`;
 })();
 
-// 2 PLAYER INIT
+// 2 PLAYER INIT USERNAME
 function player2Init(username: string, breed: string): void {
     findOpponentBox.style.display = 'none';
     player2.style.display = 'flex';
@@ -56,8 +57,42 @@ async function findOpponent() {
 }
 findOpponentBtn.addEventListener('click', findOpponent);
 
+// 2 PLAYER INIT RANDOM
+async function findOpponentRandom() {
+    const res = await fetch('/app/arena/player2-random')
+
+    if (res.status === 200) {
+        const data = await res.json();
+        player2Username = data.username;
+        player2Init(data.username, data.warrior)
+    } else {
+        const {error} = await res.json();
+        typeof error === 'string' ? alertMsgNegative(error) : alertMsgNegative(error[0]);
+    }
+}
+findOpponentBtnRandom.addEventListener('click', findOpponentRandom)
+
 // START FIGHT BUTTON
-function startFight() {
+async function startFight() {
+    const res = await fetch('/app/arena/fight', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            player2: player2Username,
+        })
+    });
+
+    if (res.status === 200) {
+        const data = await res.json();
+        console.log(data);
+    } else {
+        const {error} = await res.json();
+        typeof error === 'string' ? alertMsgNegative(error) : alertMsgNegative(error[0]);
+        findOpponentInput.value = '';
+    }
+
     fightStatsDiv.style.display = 'flex';
 }
 startFightBtn.addEventListener('click', startFight);
@@ -68,6 +103,7 @@ function closeFightStats() {
     findOpponentBox.style.display = 'flex';
     player2.style.display = 'none';
     findOpponentInput.value = '';
+    startFightBtn.style.display = 'none';
 }
 fightStatsCloseBtn.addEventListener('click', closeFightStats);
 
