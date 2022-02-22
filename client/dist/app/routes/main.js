@@ -8,6 +8,7 @@ mainRouter
     .get('/sign-in', checkNotAuth, MainController.signInPage)
     .get('/check-authorization', getUser, MainController.checkAuthorization)
     .get('/logout', MainController.logout)
+    .get('*', MainController.notFoundPage)
     .post('/sign-up', MainController.signUp)
     .post('/sign-in', MainController.signIn);
 //# sourceMappingURL=main.js.map

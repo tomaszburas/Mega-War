@@ -99,4 +99,12 @@ export class MainController {
     static checkAuthorization(req: Request, res: Response) {
         res.json(req.user)
     }
+
+    static notFoundPage(req: Request, res: Response) {
+        res
+            .status(404)
+            .sendFile('404.html', {
+                root: join(__dirname, '../../client/html')
+            })
+    }
 }

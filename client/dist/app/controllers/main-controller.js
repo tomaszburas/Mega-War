@@ -101,5 +101,12 @@ export class MainController {
     static checkAuthorization(req, res) {
         res.json(req.user);
     }
+    static notFoundPage(req, res) {
+        res
+            .status(404)
+            .sendFile('404.html', {
+            root: join(__dirname, '../../client/html')
+        });
+    }
 }
 //# sourceMappingURL=main-controller.js.map

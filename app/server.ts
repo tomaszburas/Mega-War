@@ -17,8 +17,8 @@ app.use(json());
 app.use(cookieParser());
 app.use(express.static(join(__dirname, '../client')));
 
+app.use('/app', appRouter);
 app.use('/', mainRouter);
-app.use('/app', appRouter)
 
 app.use(handleError);
 

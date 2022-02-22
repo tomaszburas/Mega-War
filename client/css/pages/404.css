@@ -1,0 +1,7 @@
+@import "../main.css";
+
+.btn__back-to-home {
+    background-color: var(--color-03);
+    padding: 0 var(--padding-sm);
+    color: var(--color-02)
+}

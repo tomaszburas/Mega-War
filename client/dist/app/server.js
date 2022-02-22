@@ -11,8 +11,8 @@ const app = express();
 app.use(json());
 app.use(cookieParser());
 app.use(express.static(join(__dirname, '../client')));
-app.use('/', mainRouter);
 app.use('/app', appRouter);
+app.use('/', mainRouter);
 app.use(handleError);
 app.listen(PORT, () => console.log('Server has started.'));
 //# sourceMappingURL=server.js.map
