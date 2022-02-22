@@ -13,7 +13,6 @@ const formSubmit = formWrapper.querySelector('.btn');
 formSubmit.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
     const username = formWrapper.querySelector('input[name="username"]');
     const password = formWrapper.querySelector('input[name="password"]');
-    const result = formWrapper.querySelector('input[name="result"]');
     if (!username.value || !password.value) {
         return alertMsgNegative('Please enter your details');
     }
@@ -27,7 +26,6 @@ formSubmit.addEventListener('click', () => __awaiter(void 0, void 0, void 0, fun
             body: JSON.stringify({
                 username: username.value,
                 password: password.value,
-                result: result.value,
             }),
         });
         if (res.status === 200) {

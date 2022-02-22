@@ -6,8 +6,6 @@ const formSubmit = formWrapper.querySelector('.btn');
 formSubmit.addEventListener('click', async () => {
     const username: HTMLInputElement = formWrapper.querySelector('input[name="username"]');
     const password: HTMLInputElement = formWrapper.querySelector('input[name="password"]');
-    const result: HTMLInputElement = formWrapper.querySelector('input[name="result"]');
-
 
     if (!username.value || !password.value) {
         return alertMsgNegative('Please enter your details');
@@ -21,7 +19,6 @@ formSubmit.addEventListener('click', async () => {
             body: JSON.stringify({
                 username: username.value,
                 password: password.value,
-                result: result.value,
             }),
         });
 

@@ -26,11 +26,9 @@ export class MainController {
     }
 
     static async signUp(req: Request, res: Response, next: NextFunction) {
-        const {username, password, result} = req.body;
+        const {username, password} = req.body;
 
         try {
-            if (+result !== 7) throw new UserError('Bad result of 2+5');
-
             const newUser = new User({
                 username: username,
                 password: password,

@@ -1,8 +1,7 @@
 import * as express from "express";
-import * as methodOverride from "method-override";
 import * as cookieParser from "cookie-parser";
 
-import {json, urlencoded} from "express";
+import {json} from "express";
 import {join} from "path";
 
 import {PORT} from "./config";
@@ -14,11 +13,8 @@ import "./db/mongoose";
 
 const app = express();
 
-app.use(methodOverride('_method'));
-// app.use(urlencoded({extended: true}))
 app.use(json());
 app.use(cookieParser());
-
 app.use(express.static(join(__dirname, '../client')));
 
 app.use('/', mainRouter);
