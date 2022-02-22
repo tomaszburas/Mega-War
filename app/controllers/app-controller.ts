@@ -13,7 +13,7 @@ export class AppController {
         })
     }
 
-    static async profile(req: Request, res: Response, next: NextFunction) {
+    static async profileHero(req: Request, res: Response, next: NextFunction) {
         try {
             const user = await User.findOne({_id: req.user.id})
 
@@ -100,5 +100,52 @@ export class AppController {
         res.sendFile('arena.html', {
             root: join(__dirname, '../../client/html')
         })
+    }
+
+    static async arenaPlayer1(req: Request, res: Response, next: NextFunction) {
+        try {
+            const user = await User.findOne({_id: req.user.id})
+
+            const userData = {
+                username: user.username,
+                warrior: user.warrior,
+            }
+
+            res
+                .status(200)
+                .json(userData)
+
+        } catch (err) {
+            if (err.name === 'ValidationError') {
+                err.message = Object.values(err.errors).map((val: any) => val.message);
+                next(err)
+            } else {
+                next(err);
+            }
+        }
+    }
+
+    static async arenaPlayer2(req: Request, res: Response, next: NextFunction) {
+        try {
+            const user = await User.findOne({username: req.body.username})
+            if (!user) throw new UserError('User with the given username does not exist')
+
+            const userData = {
+                username: user.username,
+                warrior: user.warrior,
+            }
+
+            res
+                .status(200)
+                .json(userData)
+
+        } catch (err) {
+            if (err.name === 'ValidationError') {
+                err.message = Object.values(err.errors).map((val: any) => val.message);
+                next(err)
+            } else {
+                next(err);
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 import {alertMsgNegative, alertMsgPositive} from "../utils/alert.js";
 import {configurePoints, signBuilder} from "../utils/points-configurator.js";
 
-const username = document.querySelector('.container__title');
+const username = document.querySelector('.label-username');
 const breed = document.querySelector('.label-breed');
 const wins = document.querySelector('.label-wins');
 const loses = document.querySelector('.label-loses');
@@ -13,12 +13,7 @@ const totalPoints = document.querySelector('.max-points');
 const warriorImg = document.querySelector('.warrior-img') as HTMLImageElement;
 
 (async () => {
-    const res = await fetch('/app/profile', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
+    const res = await fetch('/app/profile/hero');
 
     const userData = await res.json();
 

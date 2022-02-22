@@ -11,6 +11,8 @@ appRouter
     .get('/profile', checkNotWarrior, AppController.profilePage)
     .get('/configurator', checkWarrior, AppController.configureWarriorPage)
     .get('/arena', checkNotWarrior, AppController.arenaPage)
+    .get('/arena/player1', checkNotWarrior, AppController.arenaPlayer1)
+    .get('/profile/hero', AppController.profileHero)
 
-    .post('/profile', AppController.profile)
     .post('/configurator', AppController.configureWarrior)
+    .post('/arena/player2', AppController.arenaPlayer2)

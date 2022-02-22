@@ -19,7 +19,7 @@ export class AppController {
             root: join(__dirname, '../../client/html')
         });
     }
-    static profile(req, res, next) {
+    static profileHero(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const user = yield User.findOne({ _id: req.user.id });
@@ -100,6 +100,54 @@ export class AppController {
     static arenaPage(req, res) {
         res.sendFile('arena.html', {
             root: join(__dirname, '../../client/html')
+        });
+    }
+    static arenaPlayer1(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const user = yield User.findOne({ _id: req.user.id });
+                const userData = {
+                    username: user.username,
+                    warrior: user.warrior,
+                };
+                res
+                    .status(200)
+                    .json(userData);
+            }
+            catch (err) {
+                if (err.name === 'ValidationError') {
+                    err.message = Object.values(err.errors).map((val) => val.message);
+                    next(err);
+                }
+                else {
+                    next(err);
+                }
+            }
+        });
+    }
+    static arenaPlayer2(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const user = yield User.findOne({ username: req.body.username });
+                if (!user)
+                    throw new UserError('User with the given username does not exist');
+                const userData = {
+                    username: user.username,
+                    warrior: user.warrior,
+                };
+                res
+                    .status(200)
+                    .json(userData);
+            }
+            catch (err) {
+                if (err.name === 'ValidationError') {
+                    err.message = Object.values(err.errors).map((val) => val.message);
+                    next(err);
+                }
+                else {
+                    next(err);
+                }
+            }
         });
     }
 }

@@ -33,6 +33,7 @@
     width: 25%;
     justify-content: center;
     align-items: center;
+    margin-top: var(--margin-base);
 }
 
 .player__name {
@@ -42,7 +43,7 @@
 }
 
 .player__img {
-    width: 60%;
+    max-height: 230px;
 }
 
 .arena__opponent {
@@ -153,6 +154,14 @@
 
 .fight__stats::-webkit-scrollbar-thumb {
     background-color: var(--color-05);
+}
+
+.start-fight {
+    display: none;
+}
+
+.player2 {
+    display: none;
 }
 
 

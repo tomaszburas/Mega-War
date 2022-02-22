@@ -31,6 +31,5 @@ formSubmit.addEventListener('click', async () => {
         const {error} = await res.json();
         typeof error === 'string' ? alertMsgNegative(error) : alertMsgNegative(error[0]);
         password.value = '';
-
     }
 });
