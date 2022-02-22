@@ -5,7 +5,7 @@ import { join } from "path";
 import { PORT } from "./config";
 import { mainRouter } from "./routes/main";
 import { appRouter } from "./routes/app";
-import { handleError } from "./utils/errors";
+import { handleError } from "./midddleware/errors";
 import "./db/mongoose";
 const app = express();
 app.use(json());

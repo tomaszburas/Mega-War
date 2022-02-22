@@ -11,7 +11,8 @@ import { join } from "path";
 import { User } from "../db/models/user";
 import * as jwt from "jsonwebtoken";
 import { ACCESS_TOKEN } from "../config";
-import { UserError } from "../utils/errors";
+import { UserError } from "../midddleware/errors";
+import { msToTime } from "../utils/ms-to-time";
 export class AppController {
     static profilePage(req, res) {
         res.sendFile('profile.html', {
@@ -58,9 +59,11 @@ export class AppController {
             try {
                 const user = yield User.findOne({ _id: req.user.id });
                 if (user.params.date) {
-                    const hours = Math.floor(Math.abs(Date.now() - user.params.date) / (60 * 60 * 1000));
+                    const timer = Math.abs(Date.now() - user.params.date);
+                    const hours = Math.floor(timer / (60 * 60 * 1000));
+                    const threeHours = 10800000;
                     if (hours < 3)
-                        throw new UserError(`You can make changes one on 3 hours (${3 - hours} hours left)`);
+                        throw new UserError(`You can make changes one on 3 hours (${msToTime(threeHours - timer)} left)`);
                 }
                 user.params.strength = strength;
                 user.params.defense = defense;
@@ -92,6 +95,11 @@ export class AppController {
                     next(err);
                 }
             }
+        });
+    }
+    static arenaPage(req, res) {
+        res.sendFile('arena.html', {
+            root: join(__dirname, '../../client/html')
         });
     }
 }

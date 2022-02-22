@@ -10,7 +10,6 @@ formSubmit.addEventListener('click', async () => {
     if (!username.value || !password.value) {
         return alertMsgNegative('Please enter your details');
     } else {
-        console.log('hola');
         const res = await fetch('/sign-up', {
             method: 'POST',
             headers: {

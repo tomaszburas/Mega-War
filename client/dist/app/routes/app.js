@@ -7,6 +7,7 @@ appRouter.use(checkAuth);
 appRouter
     .get('/profile', checkNotWarrior, AppController.profilePage)
     .get('/configurator', checkWarrior, AppController.configureWarriorPage)
+    .get('/arena', checkNotWarrior, AppController.arenaPage)
     .post('/profile', AppController.profile)
     .post('/configurator', AppController.configureWarrior);
 //# sourceMappingURL=app.js.map

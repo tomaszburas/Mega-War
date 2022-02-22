@@ -17,7 +17,6 @@ formSubmit.addEventListener('click', () => __awaiter(void 0, void 0, void 0, fun
         return alertMsgNegative('Please enter your details');
     }
     else {
-        console.log('hola');
         const res = yield fetch('/sign-up', {
             method: 'POST',
             headers: {

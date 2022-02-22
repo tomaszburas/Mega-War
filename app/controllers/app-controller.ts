@@ -3,7 +3,8 @@ import {NextFunction, Request, Response} from "express";
 import {User} from "../db/models/user";
 import * as jwt from "jsonwebtoken";
 import {ACCESS_TOKEN} from "../config";
-import {UserError} from "../utils/errors";
+import {UserError} from "../midddleware/errors";
+import {msToTime} from "../utils/ms-to-time"
 
 export class AppController {
     static profilePage(req: Request, res: Response) {
@@ -54,8 +55,11 @@ export class AppController {
             const user = await User.findOne({_id: req.user.id})
 
             if (user.params.date) {
-                const hours = Math.floor(Math.abs(Date.now() - user.params.date) / (60*60*1000));
-                if (hours < 3) throw new UserError(`You can make changes one on 3 hours (${3-hours} hours left)`);
+                const timer = Math.abs(Date.now() - user.params.date);
+                const hours = Math.floor(timer / (60*60*1000));
+                const threeHours = 10800000;
+
+                if (hours < 3) throw new UserError(`You can make changes one on 3 hours (${msToTime(threeHours-timer)} left)`);
             }
 
             user.params.strength = strength;
@@ -82,7 +86,6 @@ export class AppController {
                     maxAge: 24 * 60 * 60 * 1000,
                 })
                 .end()
-
         } catch (err) {
             if (err.name === 'ValidationError') {
                 err.message = Object.values(err.errors).map((val: any) => val.message);
@@ -91,5 +94,11 @@ export class AppController {
                 next(err);
             }
         }
+    }
+
+    static arenaPage(req: Request, res: Response) {
+        res.sendFile('arena.html', {
+            root: join(__dirname, '../../client/html')
+        })
     }
 }

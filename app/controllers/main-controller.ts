@@ -4,7 +4,8 @@ import * as jwt from "jsonwebtoken";
 
 import {User} from "../db/models/user";
 import {ACCESS_TOKEN} from "../config";
-import {UserError} from "../utils/errors";
+import {UserError} from "../midddleware/errors";
+import {validatePassword} from "../utils/validators";
 
 export class MainController {
     static homePage(req: Request, res: Response) {
@@ -29,6 +30,8 @@ export class MainController {
         const {username, password} = req.body;
 
         try {
+            if (!validatePassword(password)) throw new UserError('Password must contains minimum 5 characters, at least one letter and one number')
+
             const newUser = new User({
                 username: username,
                 password: password,
