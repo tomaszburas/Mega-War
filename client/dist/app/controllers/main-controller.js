@@ -36,8 +36,8 @@ export class MainController {
                 if (!validatePassword(password))
                     throw new UserError('Password must contains minimum 5 characters, at least one letter and one number');
                 const newUser = new User({
-                    username: username,
-                    password: password,
+                    username: String(username),
+                    password: String(password),
                 });
                 yield newUser.save();
                 res
@@ -58,11 +58,11 @@ export class MainController {
     static signIn(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const user = yield User.findOne({ username: req.body.username });
+                const user = yield User.findOne({ username: String(req.body.username) });
                 if (!user) {
                     throw new UserError('User not found');
                 }
-                const isValidPassword = user.comparePassword(req.body.password);
+                const isValidPassword = user.comparePassword(String(req.body.password));
                 if (!isValidPassword) {
                     throw new UserError('Password not valid');
                 }

@@ -1,4 +1,4 @@
-import {alertMsgNegative, alertMsgPositive} from "../utils/alert.js";
+import {alertMsgNegative} from "../utils/alert.js";
 
 const startFightBtn = document.querySelector('.start-fight') as HTMLButtonElement;
 const fightStatsDiv = document.querySelector('.container__wrapper') as HTMLDivElement;
@@ -13,6 +13,10 @@ const findOpponentBtn = document.querySelector('.btn__find') as HTMLButtonElemen
 const findOpponentInput = document.querySelector('.label__input') as HTMLInputElement;
 const findOpponentBox = document.querySelector('.arena__opponent') as HTMLDivElement;
 const findOpponentBtnRandom = document.querySelector('.random-opponent') as HTMLButtonElement;
+const resultUsername = document.querySelector('.results__username') as HTMLElement;
+const resultBreed = document.querySelector('.results__breed') as HTMLElement;
+const resultImg = document.querySelector('.results__img') as HTMLImageElement;
+const resultOl = document.querySelector('.fight-ol') as HTMLElement;
 
 let player2Username = '';
 
@@ -86,7 +90,19 @@ async function startFight() {
 
     if (res.status === 200) {
         const data = await res.json();
-        console.log(data);
+
+        resultUsername.textContent = data.winner;
+        resultBreed.textContent = data.winnerBreed;
+        resultImg.src = `../img/warriors/right/r-${data.winnerBreed}.jpg`;
+
+        data.resultsLog.forEach((result: string) => {
+            const li = document.createElement('li');
+            li.classList.add('fight-text');
+            li.innerHTML = result;
+
+            resultOl.appendChild(li)
+        })
+
     } else {
         const {error} = await res.json();
         typeof error === 'string' ? alertMsgNegative(error) : alertMsgNegative(error[0]);
@@ -104,6 +120,7 @@ function closeFightStats() {
     player2.style.display = 'none';
     findOpponentInput.value = '';
     startFightBtn.style.display = 'none';
+    resultOl.textContent = '';
 }
 fightStatsCloseBtn.addEventListener('click', closeFightStats);
 

@@ -128,8 +128,10 @@ export class AppController {
 
     static async arenaPlayer2Username(req: Request, res: Response, next: NextFunction) {
         try {
-            const user = await User.findOne({username: req.body.username})
+            const user = await User.findOne({username: String(req.body.username)})
             if (!user) throw new UserError('User with the given username does not exist')
+
+            if (req.user.warrior === user.warrior) throw new UserError('You cannot fight an opponent of the same nation')
 
             const userData = {
                 username: user.username,

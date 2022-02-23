@@ -33,8 +33,8 @@ export class MainController {
             if (!validatePassword(password)) throw new UserError('Password must contains minimum 5 characters, at least one letter and one number')
 
             const newUser = new User({
-                username: username,
-                password: password,
+                username: String(username),
+                password: String(password),
             });
 
             await newUser.save();
@@ -53,12 +53,12 @@ export class MainController {
 
     static async signIn(req: Request, res: Response, next: NextFunction) {
         try {
-            const user = await User.findOne({ username: req.body.username });
+            const user = await User.findOne({ username: String(req.body.username) });
             if (!user) {
                 throw new UserError('User not found');
             }
 
-            const isValidPassword = user.comparePassword(req.body.password);
+            const isValidPassword = user.comparePassword(String(req.body.password));
             if (!isValidPassword) {
                 throw new UserError('Password not valid');
             }

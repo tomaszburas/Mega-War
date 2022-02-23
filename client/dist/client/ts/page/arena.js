@@ -21,6 +21,10 @@ const findOpponentBtn = document.querySelector('.btn__find');
 const findOpponentInput = document.querySelector('.label__input');
 const findOpponentBox = document.querySelector('.arena__opponent');
 const findOpponentBtnRandom = document.querySelector('.random-opponent');
+const resultUsername = document.querySelector('.results__username');
+const resultBreed = document.querySelector('.results__breed');
+const resultImg = document.querySelector('.results__img');
+const resultOl = document.querySelector('.fight-ol');
 let player2Username = '';
 // 1 PLAYER INIT
 (() => __awaiter(void 0, void 0, void 0, function* () {
@@ -91,7 +95,15 @@ function startFight() {
         });
         if (res.status === 200) {
             const data = yield res.json();
-            console.log(data);
+            resultUsername.textContent = data.winner;
+            resultBreed.textContent = data.winnerBreed;
+            resultImg.src = `../img/warriors/right/r-${data.winnerBreed}.jpg`;
+            data.resultsLog.forEach((result) => {
+                const li = document.createElement('li');
+                li.classList.add('fight-text');
+                li.innerHTML = result;
+                resultOl.appendChild(li);
+            });
         }
         else {
             const { error } = yield res.json();
@@ -109,6 +121,7 @@ function closeFightStats() {
     player2.style.display = 'none';
     findOpponentInput.value = '';
     startFightBtn.style.display = 'none';
+    resultOl.textContent = '';
 }
 fightStatsCloseBtn.addEventListener('click', closeFightStats);
 //# sourceMappingURL=arena.js.map

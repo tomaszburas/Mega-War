@@ -3,8 +3,8 @@ export function fight(player1, player2) {
     let attacker;
     let defender;
     const resultsLog = [];
-    let winner = '';
-    let loser = '';
+    let winner;
+    let loser;
     if (starting === 1) {
         attacker = player1;
         defender = player2;
@@ -24,16 +24,18 @@ export function fight(player1, player2) {
         }
     }
     if (attacker.hp > 0) {
-        winner = attacker.username;
-        loser = defender.username;
+        winner = attacker;
+        loser = defender;
     }
     else {
-        winner = defender.username;
-        loser = attacker.username;
+        winner = defender;
+        loser = attacker;
     }
+    resultsLog[resultsLog.length - 1] = `<b>${winner.username}</b> dealt ${winner.params.strength} damage. <b>${loser.username}</b> died ☠`;
     return {
-        winner,
-        loser,
+        winner: winner.username,
+        winnerBreed: winner.warrior,
+        loser: loser.username,
         date: new Date(),
         resultsLog,
     };
@@ -44,17 +46,22 @@ function fightSchema(attacker, defender) {
         if (attacker.params.strength > defender.dp) {
             defender.dp = defender.dp - attacker.params.strength;
             defender.hp = defender.hp + defender.dp;
-            text = `${attacker.username}🗡 dealt ${defender.username}🛡 damage of ${attacker.params.strength}. ${defender.username}🛡 has ${defender.hp} hp left`;
+            text = `<b>${attacker.username}</b> dealt ${attacker.params.strength} damage. <b>${defender.username}</b> has ${defender.hp} hp left`;
             defender.dp = 0;
         }
         else {
             defender.dp = defender.dp - attacker.params.strength;
-            text = `${attacker.username}🗡 dealt ${defender.username}🛡 damage of ${attacker.params.strength}. ${defender.username}🛡 has ${defender.hp} hp and ${defender.dp} dp left`;
+            if (defender.dp) {
+                text = `<b>${attacker.username}</b> dealt ${attacker.params.strength} damage. <b>${defender.username}</b> has ${defender.hp} hp and ${defender.dp} dp left`;
+            }
+            else {
+                text = `<b>${attacker.username}</b> dealt ${attacker.params.strength} damage. <b>${defender.username}</b> has ${defender.hp} hp`;
+            }
         }
     }
     else {
         defender.hp = defender.hp - attacker.params.strength;
-        text = `${attacker.username}🗡 dealt ${defender.username}🛡 damage of ${attacker.params.strength}. ${defender.username}🛡 has ${defender.hp} hp left`;
+        text = `<b>${attacker.username}</b> dealt ${attacker.params.strength} damage. <b>${defender.username}</b> has ${defender.hp} hp left`;
     }
     return text;
 }
