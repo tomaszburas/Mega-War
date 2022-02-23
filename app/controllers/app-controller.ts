@@ -1,11 +1,12 @@
 import {join} from "path";
 import {NextFunction, Request, Response} from "express";
 import {User} from "../db/models/user";
+import {Battle} from "../db/models/battle";
 import * as jwt from "jsonwebtoken";
 import {ACCESS_TOKEN} from "../config";
 import {UserError} from "../midddleware/errors";
-import {msToTime} from "../utils/ms-to-time"
-import {fight, Warrior} from "../utils/fight";
+import {msToHour, msToMin} from "../utils/ms-to-hour"
+import {fight} from "../utils/fight";
 
 export class AppController {
     static profilePage(req: Request, res: Response) {
@@ -60,7 +61,7 @@ export class AppController {
                 const hours = Math.floor(timer / (60*60*1000));
                 const threeHours = 10800000;
 
-                if (hours < 3) throw new UserError(`You can make changes one on 3 hours (${msToTime(threeHours-timer)} left)`);
+                if (hours < 3) throw new UserError(`You can make changes one on 3 hours (${msToHour(threeHours-timer)} left)`);
             }
 
             user.params.strength = strength;
@@ -133,6 +134,39 @@ export class AppController {
 
             if (req.user.warrior === user.warrior) throw new UserError('You cannot fight an opponent of the same nation')
 
+            // LAST BATTLE WITH OPPONENT
+            const [userBattles] = await Battle
+                .find({
+                    $and:[
+                        {$or: [{winner: req.user.username}, {loser: req.user.username}]},
+                        {$or: [{winner: user.username}, {loser: user.username}]},
+                    ]
+
+                })
+                .sort({_id: -1})
+                .limit(1)
+
+            if (userBattles) {
+                const timer = Math.abs(Date.now() - userBattles.date);
+                const hours = Math.floor(timer / (60*60*1000));
+                const oneHour = 3600000;
+
+                if (hours < 1) throw new UserError(`You have already fought a battle with this opponent. Wait ${msToHour(oneHour-timer)} h`);
+            }
+
+            // LAST BATTLE
+            const [lastBattle] = await Battle
+                .find({$or: [{winner: req.user.username}, {loser: req.user.username}]})
+                .sort({_id: -1})
+                .limit(1)
+
+            if (lastBattle) {
+                const timer = Math.abs(Date.now() - lastBattle.date);
+                const sec = Math.floor(timer / (1000));
+
+                if (sec < 90) throw new UserError(`You can start the next fight in ${msToMin((90*1000)-timer)} min`);
+            }
+
             const userData = {
                 username: user.username,
                 warrior: user.warrior,
@@ -155,11 +189,53 @@ export class AppController {
     static async arenaPlayer2Random(req: Request, res: Response, next: NextFunction) {
         try {
             const users = await User.find({username: {$ne: req.user.username}, warrior: {$ne: req.user.warrior}});
+            const battles = await Battle.find({$or: [{winner: req.user.username}, {loser: req.user.username}]}).sort({_id: -1})
 
-            const randomIndex = Math.floor(Math.random() * users.length);
+            const usersFitToFight: any[] = [];
+            users.forEach(user => {
+                const fight = battles.find(battle => battle.winner === user.username || battle.loser === user.username);
+
+                if (fight) {
+                    const timer = Math.abs(Date.now() - fight.date);
+                    const hours = Math.floor(timer / (60*60*1000));
+                    if (hours > 1) usersFitToFight.push(user);
+                } else {
+                    usersFitToFight.push(user);
+                }
+            })
+
+            if (!usersFitToFight.length) {
+                const nearbyUserDate = users
+                    .map(user => {
+                        const fight = battles.find(battle => battle.winner === user.username || battle.loser === user.username);
+                        return fight.date
+                    })
+                    .sort((a, b) => a - b)[0];
+
+                const timer = Math.abs(Date.now() - nearbyUserDate);
+                const hours = Math.floor(timer / (60*60*1000));
+                const oneHour = 3600000;
+
+                throw new UserError(`You can start the next fight in ${msToHour(oneHour-timer)} h`)
+            }
+
+            // LAST BATTLE
+            const [lastBattle] = await Battle
+                .find({$or: [{winner: req.user.username}, {loser: req.user.username}]})
+                .sort({_id: -1})
+                .limit(1)
+
+            if (lastBattle) {
+                const timer = Math.abs(Date.now() - lastBattle.date);
+                const sec = Math.floor(timer / (1000));
+
+                if (sec < 90) throw new UserError(`You can start the next fight in ${msToMin((90*1000)-timer)} min`);
+            }
+
+            const randomIndex = Math.floor(Math.random() * usersFitToFight.length);
             const userData = {
-                username: users[randomIndex].username,
-                warrior: users[randomIndex].warrior,
+                username: usersFitToFight[randomIndex].username,
+                warrior: usersFitToFight[randomIndex].warrior,
             }
             res
                 .status(200)
@@ -177,10 +253,23 @@ export class AppController {
 
     static async arenaFight(req: Request, res: Response, next: NextFunction) {
         try {
-            const player1 = (await User.find({username: {$eq: req.user.username}}))[0] as Warrior;
-            const player2 = (await User.find({username: {$eq: req.body.player2}}))[0] as Warrior;
+            const player1 = (await User.find({username: {$eq: req.user.username}}))[0];
+            const player2 = (await User.find({username: {$eq: req.body.player2}}))[0];
 
             const data = fight(player1, player2)
+
+            data.winner === player1.username? player1.wins++ : player1.loses++;
+            data.winner === player2.username? player2.wins++ : player2.loses++;
+
+            await player1.save();
+            await player2.save();
+
+            const battle = new Battle({
+                winner: data.winner,
+                loser: data.loser,
+            })
+
+            await battle.save();
 
             res
                 .status(200)

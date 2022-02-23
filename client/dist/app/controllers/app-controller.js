@@ -9,10 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { join } from "path";
 import { User } from "../db/models/user";
+import { Battle } from "../db/models/battle";
 import * as jwt from "jsonwebtoken";
 import { ACCESS_TOKEN } from "../config";
 import { UserError } from "../midddleware/errors";
-import { msToTime } from "../utils/ms-to-time";
+import { msToHour, msToMin } from "../utils/ms-to-hour";
 import { fight } from "../utils/fight";
 export class AppController {
     static profilePage(req, res) {
@@ -64,7 +65,7 @@ export class AppController {
                     const hours = Math.floor(timer / (60 * 60 * 1000));
                     const threeHours = 10800000;
                     if (hours < 3)
-                        throw new UserError(`You can make changes one on 3 hours (${msToTime(threeHours - timer)} left)`);
+                        throw new UserError(`You can make changes one on 3 hours (${msToHour(threeHours - timer)} left)`);
                 }
                 user.params.strength = strength;
                 user.params.defense = defense;
@@ -134,6 +135,34 @@ export class AppController {
                     throw new UserError('User with the given username does not exist');
                 if (req.user.warrior === user.warrior)
                     throw new UserError('You cannot fight an opponent of the same nation');
+                // LAST BATTLE WITH OPPONENT
+                const [userBattles] = yield Battle
+                    .find({
+                    $and: [
+                        { $or: [{ winner: req.user.username }, { loser: req.user.username }] },
+                        { $or: [{ winner: user.username }, { loser: user.username }] },
+                    ]
+                })
+                    .sort({ _id: -1 })
+                    .limit(1);
+                if (userBattles) {
+                    const timer = Math.abs(Date.now() - userBattles.date);
+                    const hours = Math.floor(timer / (60 * 60 * 1000));
+                    const oneHour = 3600000;
+                    if (hours < 1)
+                        throw new UserError(`You have already fought a battle with this opponent. Wait ${msToHour(oneHour - timer)} h`);
+                }
+                // LAST BATTLE
+                const [lastBattle] = yield Battle
+                    .find({ $or: [{ winner: req.user.username }, { loser: req.user.username }] })
+                    .sort({ _id: -1 })
+                    .limit(1);
+                if (lastBattle) {
+                    const timer = Math.abs(Date.now() - lastBattle.date);
+                    const sec = Math.floor(timer / (1000));
+                    if (sec < 90)
+                        throw new UserError(`You can start the next fight in ${msToMin((90 * 1000) - timer)} min`);
+                }
                 const userData = {
                     username: user.username,
                     warrior: user.warrior,
@@ -157,10 +186,47 @@ export class AppController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const users = yield User.find({ username: { $ne: req.user.username }, warrior: { $ne: req.user.warrior } });
-                const randomIndex = Math.floor(Math.random() * users.length);
+                const battles = yield Battle.find({ $or: [{ winner: req.user.username }, { loser: req.user.username }] }).sort({ _id: -1 });
+                const usersFitToFight = [];
+                users.forEach(user => {
+                    const fight = battles.find(battle => battle.winner === user.username || battle.loser === user.username);
+                    if (fight) {
+                        const timer = Math.abs(Date.now() - fight.date);
+                        const hours = Math.floor(timer / (60 * 60 * 1000));
+                        if (hours > 1)
+                            usersFitToFight.push(user);
+                    }
+                    else {
+                        usersFitToFight.push(user);
+                    }
+                });
+                if (!usersFitToFight.length) {
+                    const nearbyUserDate = users
+                        .map(user => {
+                        const fight = battles.find(battle => battle.winner === user.username || battle.loser === user.username);
+                        return fight.date;
+                    })
+                        .sort((a, b) => a - b)[0];
+                    const timer = Math.abs(Date.now() - nearbyUserDate);
+                    const hours = Math.floor(timer / (60 * 60 * 1000));
+                    const oneHour = 3600000;
+                    throw new UserError(`You can start the next fight in ${msToHour(oneHour - timer)} h`);
+                }
+                // LAST BATTLE
+                const [lastBattle] = yield Battle
+                    .find({ $or: [{ winner: req.user.username }, { loser: req.user.username }] })
+                    .sort({ _id: -1 })
+                    .limit(1);
+                if (lastBattle) {
+                    const timer = Math.abs(Date.now() - lastBattle.date);
+                    const sec = Math.floor(timer / (1000));
+                    if (sec < 90)
+                        throw new UserError(`You can start the next fight in ${msToMin((90 * 1000) - timer)} min`);
+                }
+                const randomIndex = Math.floor(Math.random() * usersFitToFight.length);
                 const userData = {
-                    username: users[randomIndex].username,
-                    warrior: users[randomIndex].warrior,
+                    username: usersFitToFight[randomIndex].username,
+                    warrior: usersFitToFight[randomIndex].warrior,
                 };
                 res
                     .status(200)
@@ -183,6 +249,15 @@ export class AppController {
                 const player1 = (yield User.find({ username: { $eq: req.user.username } }))[0];
                 const player2 = (yield User.find({ username: { $eq: req.body.player2 } }))[0];
                 const data = fight(player1, player2);
+                data.winner === player1.username ? player1.wins++ : player1.loses++;
+                data.winner === player2.username ? player2.wins++ : player2.loses++;
+                yield player1.save();
+                yield player2.save();
+                const battle = new Battle({
+                    winner: data.winner,
+                    loser: data.loser,
+                });
+                yield battle.save();
                 res
                     .status(200)
                     .json(data);

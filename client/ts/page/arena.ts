@@ -92,8 +92,8 @@ async function startFight() {
         const data = await res.json();
 
         resultUsername.textContent = data.winner;
-        resultBreed.textContent = data.winnerBreed;
-        resultImg.src = `../img/warriors/right/r-${data.winnerBreed}.jpg`;
+        resultBreed.textContent = data.winnerNation;
+        resultImg.src = `../img/warriors/right/r-${data.winnerNation}.jpg`;
 
         data.resultsLog.forEach((result: string) => {
             const li = document.createElement('li');

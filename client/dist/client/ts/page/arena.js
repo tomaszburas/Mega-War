@@ -96,8 +96,8 @@ function startFight() {
         if (res.status === 200) {
             const data = yield res.json();
             resultUsername.textContent = data.winner;
-            resultBreed.textContent = data.winnerBreed;
-            resultImg.src = `../img/warriors/right/r-${data.winnerBreed}.jpg`;
+            resultBreed.textContent = data.winnerNation;
+            resultImg.src = `../img/warriors/right/r-${data.winnerNation}.jpg`;
             data.resultsLog.forEach((result) => {
                 const li = document.createElement('li');
                 li.classList.add('fight-text');

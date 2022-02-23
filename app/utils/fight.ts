@@ -63,9 +63,8 @@ export function fight(player1: Warrior, player2: Warrior) {
 
     return {
         winner: winner.username,
-        winnerBreed: winner.warrior,
+        winnerNation: winner.warrior,
         loser: loser.username,
-        date: new Date(),
         resultsLog,
     }
 }
