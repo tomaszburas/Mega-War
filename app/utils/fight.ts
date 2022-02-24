@@ -1,34 +1,20 @@
-import { ObjectId } from 'mongoose';
+import {Warrior} from "../ts/interfaces/Warrior";
+import {User} from "../ts/interfaces/User";
 
-export interface Warrior {
-    _id: ObjectId;
-    username: string;
-    password: string;
-    params: {
-        strength: number;
-        defense: number;
-        resilience: number;
-        agility: number;
-        date: Date;
-    };
-    warrior: string;
-    wins: number;
-    loses: number;
-    __v?: number;
+interface battleReturn {
+    winner: string,
+    winnerNation: string,
+    loser: string,
+    resultsLog: string[],
 }
 
-interface WarriorForFight extends Warrior {
-    hp?: number;
-    dp?: number;
-}
-
-export function fight(player1: Warrior, player2: Warrior) {
+export function fight(player1: User, player2: User): battleReturn {
     const starting = Math.floor(Math.random() * 2) + 1;
-    let attacker: WarriorForFight;
-    let defender: WarriorForFight;
+    let attacker: Warrior;
+    let defender: Warrior;
     const resultsLog: Array<string> = [];
-    let winner: WarriorForFight;
-    let loser: WarriorForFight;
+    let winner: Warrior;
+    let loser: Warrior;
 
     if (starting === 1) {
         attacker = player1;
@@ -69,7 +55,7 @@ export function fight(player1: Warrior, player2: Warrior) {
     }
 }
 
-function fightSchema(attacker: WarriorForFight, defender: WarriorForFight): string {
+function fightSchema(attacker: Warrior, defender: Warrior): string {
     let text = '';
     if (attacker.params.strength < defender.params.agility + defender.dp) {
         if (attacker.params.strength > defender.dp) {

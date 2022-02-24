@@ -1,5 +1,6 @@
 import {alertMsgNegative, alertMsgPositive} from "../utils/alert.js";
 import {configurePoints, signBuilder} from "../utils/points-configurator.js";
+import {Results} from "../../../app/ts/interfaces/Results";
 
 const username = document.querySelector('.label-username');
 const breed = document.querySelector('.label-breed');
@@ -11,6 +12,7 @@ const resilience = document.querySelector('.resilience');
 const agility = document.querySelector('.agility');
 const totalPoints = document.querySelector('.max-points');
 const warriorImg = document.querySelector('.warrior-img') as HTMLImageElement;
+const resultsOl = document.querySelector('.results__ol');
 
 (async () => {
     const res = await fetch('/app/profile/hero');
@@ -37,6 +39,7 @@ const warriorImg = document.querySelector('.warrior-img') as HTMLImageElement;
 
     configurePoints(userData.warrior, false);
 
+    // SAVE BUTTON
     btn.addEventListener('click', async () => {
         const strength = document.querySelector('.strength');
         const defense = document.querySelector('.defense');
@@ -78,5 +81,66 @@ const warriorImg = document.querySelector('.warrior-img') as HTMLImageElement;
             }
         }
     })
+
+    // RESULTS CONTAINER
+    createResults(userData.battleResults);
 })();
 
+function createResults(arr: Results[]): void {
+    arr.forEach(el => {
+        const li = document.createElement('li');
+        li.classList.add('battle__li');
+
+        //LEFT
+        const divLeft = document.createElement('div');
+        divLeft.classList.add('battle__li__left');
+
+        const spanPlayer1 = document.createElement('span');
+        spanPlayer1.classList.add('battle__li-player1');
+        spanPlayer1.textContent = el.user;
+        const spanVs = document.createElement('span');
+        spanVs.classList.add('battle__li-vs');
+        spanVs.textContent = ' vs ';
+        const spanPlayer2 = document.createElement('span');
+        spanPlayer2.classList.add('battle__li-player2');
+        spanPlayer2.textContent = el.opponent;
+
+        divLeft.appendChild(spanPlayer1)
+        divLeft.appendChild(spanVs)
+        divLeft.appendChild(spanPlayer2)
+
+        //CENTER
+        const spanDate = document.createElement('span');
+        spanDate.classList.add('battle__li-date');
+        spanDate.textContent = date(new Date(el.date));
+
+        //RIGHT
+        const spanResult = document.createElement('span');
+        spanResult.classList.add('battle__li-result');
+
+        if (el.result) {
+            spanResult.classList.add('victory');
+            spanResult.textContent = `Victory`;
+        } else {
+            spanResult.classList.add('defeat');
+            spanResult.textContent = `Defeat`;
+        }
+
+        li.appendChild(divLeft);
+        li.appendChild(spanDate);
+        li.appendChild(spanResult);
+
+        resultsOl.appendChild(li)
+    })
+}
+
+function date(date: any): string {
+    let month: string;
+    let min: string;
+
+    date.getMonth()+1 < 10? month = `0${date.getMonth()+1}` : month = `${date.getMonth()+1}`;
+
+    date.getMinutes() < 10? min = `0${date.getMinutes()}` : min = `${date.getMinutes()}`
+
+    return `${date.getDate()}.${month}.${date.getFullYear()} - ${date.getHours()}:${min}`
+}

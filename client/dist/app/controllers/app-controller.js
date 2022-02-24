@@ -13,8 +13,10 @@ import { Battle } from "../db/models/battle";
 import * as jwt from "jsonwebtoken";
 import { ACCESS_TOKEN } from "../config";
 import { UserError } from "../midddleware/errors";
-import { msToHour, msToMin } from "../utils/ms-to-hour";
+import { msToHour } from "../utils/timer";
 import { fight } from "../utils/fight";
+import { lastBattle } from "../utils/battle-validators";
+import { battleResults } from "../utils/battle-results";
 export class AppController {
     static profilePage(req, res) {
         res.sendFile('profile.html', {
@@ -25,6 +27,7 @@ export class AppController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const user = yield User.findOne({ _id: req.user.id });
+                const battleResultsArr = yield battleResults(req);
                 const userData = {
                     username: user.username,
                     strength: user.params.strength,
@@ -34,6 +37,7 @@ export class AppController {
                     warrior: user.warrior,
                     wins: user.wins,
                     loses: user.loses,
+                    battleResults: battleResultsArr,
                 };
                 res
                     .status(200)
@@ -152,17 +156,7 @@ export class AppController {
                     if (hours < 1)
                         throw new UserError(`You have already fought a battle with this opponent. Wait ${msToHour(oneHour - timer)} h`);
                 }
-                // LAST BATTLE
-                const [lastBattle] = yield Battle
-                    .find({ $or: [{ winner: req.user.username }, { loser: req.user.username }] })
-                    .sort({ _id: -1 })
-                    .limit(1);
-                if (lastBattle) {
-                    const timer = Math.abs(Date.now() - lastBattle.date);
-                    const sec = Math.floor(timer / (1000));
-                    if (sec < 90)
-                        throw new UserError(`You can start the next fight in ${msToMin((90 * 1000) - timer)} min`);
-                }
+                yield lastBattle(req);
                 const userData = {
                     username: user.username,
                     warrior: user.warrior,
@@ -208,21 +202,10 @@ export class AppController {
                     })
                         .sort((a, b) => a - b)[0];
                     const timer = Math.abs(Date.now() - nearbyUserDate);
-                    const hours = Math.floor(timer / (60 * 60 * 1000));
-                    const oneHour = 3600000;
-                    throw new UserError(`You can start the next fight in ${msToHour(oneHour - timer)} h`);
+                    const hour = 3600000;
+                    throw new UserError(`You can start the next fight in ${msToHour(hour - timer)} h`);
                 }
-                // LAST BATTLE
-                const [lastBattle] = yield Battle
-                    .find({ $or: [{ winner: req.user.username }, { loser: req.user.username }] })
-                    .sort({ _id: -1 })
-                    .limit(1);
-                if (lastBattle) {
-                    const timer = Math.abs(Date.now() - lastBattle.date);
-                    const sec = Math.floor(timer / (1000));
-                    if (sec < 90)
-                        throw new UserError(`You can start the next fight in ${msToMin((90 * 1000) - timer)} min`);
-                }
+                yield lastBattle(req);
                 const randomIndex = Math.floor(Math.random() * usersFitToFight.length);
                 const userData = {
                     username: usersFitToFight[randomIndex].username,

@@ -1,7 +1,7 @@
 @import "../main.css";
 @import "../points-configurator.css";
 
-.container__right {
+.container__left {
     padding: var(--padding-base);
     background-color: var(--color-06);
     display: flex;
@@ -10,18 +10,18 @@
     width: 25%;
 }
 
-.container__center {
-    margin-left: 3%;
+.container__right {
+    margin-left: var(--margin-base);
     padding: var(--padding-base);
     background-color: var(--color-06);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    width: 30%;
+    width: 35%;
 }
 
-.container__center__top {
+.container__right__top {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -44,11 +44,27 @@
     text-align: center;
 }
 
+.label-ranking {
+    background-color: var(--color-01);
+    color: var(--color-02);
+    padding: 0 var(--padding-sm);
+    width: 100%;
+    text-align: center;
+}
+
+.ranking {
+    background-color: var(--color-02);
+    color: var(--color-01);
+    padding: 0 var(--padding-sm);
+    outline: 4px solid var(--color-01);
+    outline-offset: -4px;
+}
+
 .warrior-img {
     width:60%;
 }
 
-.container__center__center {
+.container__right__center {
     display: flex;
     background-color: var(--color-02);
     padding: var(--padding-sm);
@@ -86,7 +102,7 @@
     padding: 0 var(--padding-sm);
 }
 
-.container__center__bottom {
+.container__right__bottom {
     margin-top: var(--margin-sm);
 }
 
@@ -96,4 +112,47 @@
     padding: 0 var(--padding-sm);
     width: 100%;
     text-align: center;
+}
+
+.container__results {
+    width: calc(60% + var(--margin-base));
+    background-color: var(--color-02);
+    margin: var(--margin-base) 0;
+    height: 100%;
+    padding: var(--padding-base);
+    overflow-y: auto;
+}
+
+.battle__li {
+    display: flex;
+    justify-content: space-between;
+}
+
+.battle__li:not(:last-of-type) {
+    margin-bottom: 2px;
+}
+
+.battle__li-result {
+    padding: 0 var(--padding-sm);
+}
+
+.victory {
+    background-color: var(--color-06);
+}
+
+.defeat {
+    color: var(--color-02);
+    background-color: var(--color-03);
+}
+
+.container__results::-webkit-scrollbar {
+    width: 10px;
+}
+
+.container__results::-webkit-scrollbar-track {
+    background-color: #e4e4e4;
+}
+
+.container__results::-webkit-scrollbar-thumb {
+    background-color: var(--color-05);
 }
