@@ -249,7 +249,7 @@ export class AppController {
         }
     }
 
-    static async arenaFight(req: Request, res: Response, next: NextFunction) {
+    static async arena(req: Request, res: Response, next: NextFunction) {
         try {
             const player1 = (await User.find({username: {$eq: req.user.username}}))[0];
             const player2 = (await User.find({username: {$eq: req.body.player2}}))[0];

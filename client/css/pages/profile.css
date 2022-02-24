@@ -127,6 +127,7 @@
 .battle__li {
     display: flex;
     justify-content: space-between;
+    width: 100%;
 }
 
 .battle__li:not(:last-of-type) {
@@ -157,3 +158,12 @@
 .container__results::-webkit-scrollbar-thumb {
     background-color: var(--color-05);
 }
+
+.battle__li__left {
+    width: 55%;
+}
+
+.battle__li-date {
+    width: 30%;
+}
+

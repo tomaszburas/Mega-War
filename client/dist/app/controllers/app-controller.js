@@ -242,7 +242,7 @@ export class AppController {
             }
         });
     }
-    static arenaFight(req, res, next) {
+    static arena(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const player1 = (yield User.find({ username: { $eq: req.user.username } }))[0];

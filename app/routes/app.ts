@@ -17,4 +17,4 @@ appRouter
 
     .post('/configurator', AppController.configureWarrior)
     .post('/arena/player2', AppController.arenaPlayer2Username)
-    .post('/arena/fight', AppController.arenaFight)
+    .post('/arena/fight', AppController.arena)
