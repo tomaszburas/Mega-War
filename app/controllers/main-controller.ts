@@ -119,7 +119,7 @@ export class MainController {
 
     static async ranking(req: Request, res: Response, next: NextFunction) {
         try {
-            const users = await User.find({}).sort({wins: -1})
+            const users = await User.find({nation: {$ne: ''}}).sort({wins: -1})
 
             const data = users.map((user, i) => {
                 return {

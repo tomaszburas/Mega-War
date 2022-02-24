@@ -25,8 +25,10 @@ const userSchema = new Schema({
     loses: { type: Number, default: 0 },
 });
 userSchema.pre('save', function (next) {
-    const salt = bcrypt.genSaltSync(10);
-    this.password = bcrypt.hashSync(this.password, salt);
+    if (!this.nation) {
+        const salt = bcrypt.genSaltSync(10);
+        this.password = bcrypt.hashSync(this.password, salt);
+    }
     next();
 });
 userSchema.path('username').set((value) => {

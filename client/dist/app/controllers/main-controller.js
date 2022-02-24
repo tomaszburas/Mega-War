@@ -119,7 +119,7 @@ export class MainController {
     static ranking(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const users = yield User.find({}).sort({ wins: -1 });
+                const users = yield User.find({ nation: { $ne: '' } }).sort({ wins: -1 });
                 const data = users.map((user, i) => {
                     return {
                         place: i + 1,
