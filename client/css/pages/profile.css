@@ -121,6 +121,7 @@
     height: 100%;
     padding: var(--padding-base);
     overflow-y: auto;
+    display: none;
 }
 
 .battle__li {

@@ -13,6 +13,7 @@ const agility = document.querySelector('.agility');
 const totalPoints = document.querySelector('.max-points');
 const warriorImg = document.querySelector('.warrior-img') as HTMLImageElement;
 const resultsOl = document.querySelector('.results__ol');
+const resultsContainer = document.querySelector('.container__results') as HTMLDivElement;
 
 (async () => {
     const res = await fetch('/app/profile/hero');
@@ -83,7 +84,10 @@ const resultsOl = document.querySelector('.results__ol');
     })
 
     // RESULTS CONTAINER
-    createResults(userData.battleResults);
+    if (userData.battleResults.length) {
+        resultsContainer.style.display = 'block'
+        createResults(userData.battleResults);
+    }
 })();
 
 function createResults(arr: Results[]): void {

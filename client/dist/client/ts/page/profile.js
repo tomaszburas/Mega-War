@@ -20,6 +20,7 @@ const agility = document.querySelector('.agility');
 const totalPoints = document.querySelector('.max-points');
 const warriorImg = document.querySelector('.warrior-img');
 const resultsOl = document.querySelector('.results__ol');
+const resultsContainer = document.querySelector('.container__results');
 (() => __awaiter(void 0, void 0, void 0, function* () {
     const res = yield fetch('/app/profile/hero');
     const userData = yield res.json();
@@ -77,7 +78,10 @@ const resultsOl = document.querySelector('.results__ol');
         }
     }));
     // RESULTS CONTAINER
-    createResults(userData.battleResults);
+    if (userData.battleResults.length) {
+        resultsContainer.style.display = 'block';
+        createResults(userData.battleResults);
+    }
 }))();
 function createResults(arr) {
     arr.forEach(el => {
