@@ -13,6 +13,7 @@ const agility = document.querySelector('.agility');
 const totalPoints = document.querySelector('.max-points');
 const warriorImg = document.querySelector('.warrior-img') as HTMLImageElement;
 const resultsOl = document.querySelector('.results__ol');
+const ranking = document.querySelector('.ranking');
 const resultsContainer = document.querySelector('.container__results') as HTMLDivElement;
 
 (async () => {
@@ -25,6 +26,8 @@ const resultsContainer = document.querySelector('.container__results') as HTMLDi
 
     wins.textContent = userData.wins;
     loses.textContent = userData.loses;
+
+    ranking.textContent = userData.place;
 
     strength.textContent = userData.strength;
     defense.textContent = userData.defense;

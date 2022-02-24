@@ -26,6 +26,10 @@ export class AppController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const user = yield User.findOne({ _id: req.user.id });
+                const usersRanking = yield User.find({ nation: { $ne: '' } }).sort({ wins: -1 });
+                const index = usersRanking.findIndex(user => {
+                    return user.id === req.user.id;
+                });
                 const battleResultsArr = yield battleResults(req);
                 const userData = {
                     username: user.username,
@@ -37,6 +41,7 @@ export class AppController {
                     wins: user.wins,
                     loses: user.loses,
                     battleResults: battleResultsArr,
+                    place: index + 1,
                 };
                 res
                     .status(200)
@@ -138,17 +143,6 @@ export class AppController {
                     throw new UserError('User with the given username does not exist');
                 if (req.user.nation === user.nation)
                     throw new UserError('You cannot fight an opponent of the same nation');
-                // LAST BATTLE
-                const [lastBattle] = yield Battle
-                    .find({ $or: [{ winner: req.user.username }, { loser: req.user.username }] })
-                    .sort({ _id: -1 })
-                    .limit(1);
-                if (lastBattle) {
-                    const timer = Math.abs(Date.now() - lastBattle.date);
-                    const sec = Math.floor(timer / (1000));
-                    if (sec < 60)
-                        throw new UserError(`You can start the next fight in ${msToMin((60 * 1000) - timer)} sec`);
-                }
                 // LAST BATTLE WITH OPPONENT
                 const [userBattles] = yield Battle
                     .find({
@@ -165,6 +159,17 @@ export class AppController {
                     const oneHour = 3600000;
                     if (hours < 1)
                         throw new UserError(`You have already fought a battle with this opponent. Wait ${msToHour(oneHour - timer)} h`);
+                }
+                // LAST BATTLE
+                const [lastBattle] = yield Battle
+                    .find({ $or: [{ winner: req.user.username }, { loser: req.user.username }] })
+                    .sort({ _id: -1 })
+                    .limit(1);
+                if (lastBattle) {
+                    const timer = Math.abs(Date.now() - lastBattle.date);
+                    const sec = Math.floor(timer / (1000));
+                    if (sec < 60)
+                        throw new UserError(`You can start the next fight in ${msToMin((60 * 1000) - timer)} min`);
                 }
                 const userData = {
                     username: user.username,
@@ -188,15 +193,8 @@ export class AppController {
     static arenaPlayer2Random(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const users = yield User.find({ username: { $ne: req.user.username }, warrior: { $ne: req.user.nation } });
+                const users = yield User.find({ username: { $ne: req.user.username }, nation: { $ne: req.user.nation } });
                 const battles = yield Battle.find({ $or: [{ winner: req.user.username }, { loser: req.user.username }] }).sort({ _id: -1 });
-                // LAST BATTLE
-                if (battles[0]) {
-                    const timer = Math.abs(Date.now() - battles[0].date);
-                    const sec = Math.floor(timer / (1000));
-                    if (sec < 60)
-                        throw new UserError(`You can start the next fight in ${msToMin((60 * 1000) - timer)} sec`);
-                }
                 // LAST BATTLE WITH THIS SAME USER
                 const usersFitToFight = [];
                 users.forEach(user => {
@@ -221,6 +219,13 @@ export class AppController {
                     const timer = Math.abs(Date.now() - nearbyUserDate);
                     const hour = 3600000;
                     throw new UserError(`You can start the next fight in ${msToHour(hour - timer)} h`);
+                }
+                // LAST BATTLE
+                if (battles[0]) {
+                    const timer = Math.abs(Date.now() - battles[0].date);
+                    const sec = Math.floor(timer / (1000));
+                    if (sec < 60)
+                        throw new UserError(`You can start the next fight in ${msToMin((60 * 1000) - timer)} min`);
                 }
                 const randomIndex = Math.floor(Math.random() * usersFitToFight.length);
                 const userData = {

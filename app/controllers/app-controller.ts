@@ -18,7 +18,12 @@ export class AppController {
 
     static async profileHero(req: Request, res: Response, next: NextFunction) {
         try {
-            const user = await User.findOne({_id: req.user.id})
+            const user = await User.findOne({_id: req.user.id});
+            const usersRanking = await User.find({nation: {$ne: ''}}).sort({wins: -1})
+
+            const index = usersRanking.findIndex(user => {
+                return user.id === req.user.id;
+            })
 
             const battleResultsArr = await battleResults(req);
 
@@ -32,6 +37,7 @@ export class AppController {
                 wins: user.wins,
                 loses: user.loses,
                 battleResults: battleResultsArr,
+                place: index+1,
             }
 
             res
@@ -137,19 +143,6 @@ export class AppController {
             if (!user) throw new UserError('User with the given username does not exist')
             if (req.user.nation === user.nation) throw new UserError('You cannot fight an opponent of the same nation')
 
-            // LAST BATTLE
-            const [lastBattle] = await Battle
-                .find({$or: [{winner: req.user.username}, {loser: req.user.username}]})
-                .sort({_id: -1})
-                .limit(1)
-
-            if (lastBattle) {
-                const timer = Math.abs(Date.now() - lastBattle.date);
-                const sec = Math.floor(timer / (1000));
-
-                if (sec < 60) throw new UserError(`You can start the next fight in ${msToMin((60*1000)-timer)} sec`);
-            }
-
             // LAST BATTLE WITH OPPONENT
             const [userBattles] = await Battle
                 .find({
@@ -168,6 +161,19 @@ export class AppController {
                 const oneHour = 3600000;
 
                 if (hours < 1) throw new UserError(`You have already fought a battle with this opponent. Wait ${msToHour(oneHour-timer)} h`);
+            }
+
+            // LAST BATTLE
+            const [lastBattle] = await Battle
+                .find({$or: [{winner: req.user.username}, {loser: req.user.username}]})
+                .sort({_id: -1})
+                .limit(1)
+
+            if (lastBattle) {
+                const timer = Math.abs(Date.now() - lastBattle.date);
+                const sec = Math.floor(timer / (1000));
+
+                if (sec < 60) throw new UserError(`You can start the next fight in ${msToMin((60*1000)-timer)} min`);
             }
 
             const userData = {
@@ -191,16 +197,8 @@ export class AppController {
 
     static async arenaPlayer2Random(req: Request, res: Response, next: NextFunction) {
         try {
-            const users = await User.find({username: {$ne: req.user.username}, warrior: {$ne: req.user.nation}});
+            const users = await User.find({username: {$ne: req.user.username}, nation: {$ne: req.user.nation}});
             const battles = await Battle.find({$or: [{winner: req.user.username}, {loser: req.user.username}]}).sort({_id: -1})
-
-            // LAST BATTLE
-            if (battles[0]) {
-                const timer = Math.abs(Date.now() - battles[0].date);
-                const sec = Math.floor(timer / (1000));
-
-                if (sec < 60) throw new UserError(`You can start the next fight in ${msToMin((60*1000)-timer)} sec`);
-            }
 
             // LAST BATTLE WITH THIS SAME USER
             const usersFitToFight: any[] = [];
@@ -228,6 +226,14 @@ export class AppController {
                 const hour = 3600000;
 
                 throw new UserError(`You can start the next fight in ${msToHour(hour-timer)} h`)
+            }
+
+            // LAST BATTLE
+            if (battles[0]) {
+                const timer = Math.abs(Date.now() - battles[0].date);
+                const sec = Math.floor(timer / (1000));
+
+                if (sec < 60) throw new UserError(`You can start the next fight in ${msToMin((60*1000)-timer)} min`);
             }
 
             const randomIndex = Math.floor(Math.random() * usersFitToFight.length);
