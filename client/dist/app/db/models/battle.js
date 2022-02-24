@@ -9,7 +9,6 @@ const battleSchema = new Schema({
     },
     date: {
         type: Date,
-        default: new Date(),
     }
 });
 export const Battle = mongoose.model('Battle', battleSchema);

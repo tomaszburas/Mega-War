@@ -10,7 +10,6 @@ const battleSchema = new Schema ({
     },
     date: {
         type: Date,
-        default: new Date(),
     }
 });
 

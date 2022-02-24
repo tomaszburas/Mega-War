@@ -10,6 +10,8 @@ mainRouter
     .get('/sign-in', checkNotAuth, MainController.signInPage)
     .get('/check-authorization', getUser, MainController.checkAuthorization)
     .get('/logout', MainController.logout)
+    .get('/ranking', MainController.rankingPage)
+    .get('/get-ranking', MainController.ranking)
     .get('*', MainController.notFoundPage)
 
     .post('/sign-up', MainController.signUp)

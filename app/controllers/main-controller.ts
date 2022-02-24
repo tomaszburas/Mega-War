@@ -66,7 +66,7 @@ export class MainController {
             const payload = {
                 username: user.username,
                 id: String(user._id),
-                warrior: user.warrior,
+                nation: user.nation,
             }
 
             const token = jwt.sign(payload, ACCESS_TOKEN, {expiresIn: "1d"});
@@ -109,5 +109,39 @@ export class MainController {
             .sendFile('404.html', {
                 root: join(__dirname, '../../client/html')
             })
+    }
+
+    static rankingPage(req: Request, res: Response) {
+        res.sendFile('ranking.html', {
+            root: join(__dirname, '../../client/html')
+        })
+    }
+
+    static async ranking(req: Request, res: Response, next: NextFunction) {
+        try {
+            const users = await User.find({}).sort({wins: -1})
+
+            const data = users.map((user, i) => {
+                return {
+                    place: i+1,
+                    username: user.username,
+                    nation: user.nation,
+                    wins: user.wins,
+                    defeats: user.loses,
+                }
+            })
+
+            res
+                .status(200)
+                .json(data)
+
+        } catch (err) {
+            if (err.name === 'ValidationError') {
+                err.message = Object.values(err.errors).map((val: any) => val.message);
+                next(err)
+            } else {
+                next(err);
+            }
+        }
     }
 }

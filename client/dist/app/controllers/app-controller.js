@@ -33,7 +33,7 @@ export class AppController {
                     defense: user.params.defense,
                     resilience: user.params.resilience,
                     agility: user.params.agility,
-                    warrior: user.warrior,
+                    nation: user.nation,
                     wins: user.wins,
                     loses: user.loses,
                     battleResults: battleResultsArr,
@@ -60,7 +60,7 @@ export class AppController {
     }
     static configureWarrior(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { strength, defense, resilience, agility, warrior } = req.body;
+            const { strength, defense, resilience, agility, nation } = req.body;
             try {
                 const user = yield User.findOne({ _id: req.user.id });
                 if (user.params.date) {
@@ -75,12 +75,12 @@ export class AppController {
                 user.params.resilience = resilience;
                 user.params.agility = agility;
                 user.params.date = Date.now();
-                user.warrior = warrior ? warrior : user.warrior;
+                user.nation = nation ? nation : user.nation;
                 yield user.save();
                 const payload = {
                     username: user.username,
                     id: String(user._id),
-                    warrior: user.warrior,
+                    nation: user.nation,
                 };
                 const token = jwt.sign(payload, ACCESS_TOKEN, { expiresIn: "1d" });
                 res
@@ -113,7 +113,7 @@ export class AppController {
                 const user = yield User.findOne({ _id: req.user.id });
                 const userData = {
                     username: user.username,
-                    warrior: user.warrior,
+                    nation: user.nation,
                 };
                 res
                     .status(200)
@@ -136,7 +136,7 @@ export class AppController {
                 const user = yield User.findOne({ username: String(req.body.username) });
                 if (!user)
                     throw new UserError('User with the given username does not exist');
-                if (req.user.warrior === user.warrior)
+                if (req.user.nation === user.nation)
                     throw new UserError('You cannot fight an opponent of the same nation');
                 // LAST BATTLE
                 const [lastBattle] = yield Battle
@@ -168,7 +168,7 @@ export class AppController {
                 }
                 const userData = {
                     username: user.username,
-                    warrior: user.warrior,
+                    nation: user.nation,
                 };
                 res
                     .status(200)
@@ -188,7 +188,7 @@ export class AppController {
     static arenaPlayer2Random(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const users = yield User.find({ username: { $ne: req.user.username }, warrior: { $ne: req.user.warrior } });
+                const users = yield User.find({ username: { $ne: req.user.username }, warrior: { $ne: req.user.nation } });
                 const battles = yield Battle.find({ $or: [{ winner: req.user.username }, { loser: req.user.username }] }).sort({ _id: -1 });
                 // LAST BATTLE
                 if (battles[0]) {
@@ -225,7 +225,7 @@ export class AppController {
                 const randomIndex = Math.floor(Math.random() * usersFitToFight.length);
                 const userData = {
                     username: usersFitToFight[randomIndex].username,
-                    warrior: usersFitToFight[randomIndex].warrior,
+                    nation: usersFitToFight[randomIndex].nation,
                 };
                 res
                     .status(200)
@@ -255,6 +255,7 @@ export class AppController {
                 const battle = new Battle({
                     winner: data.winner,
                     loser: data.loser,
+                    date: new Date(),
                 });
                 yield battle.save();
                 res

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--CSS-->
+    <link rel="stylesheet" href="../css/pages/ranking.css" />
+    <!--FONT-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!--ANIMATION-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <title>Mega War</title>
+</head>
+<body>
+<div class="wrapper">
+    <header class="header">
+        <a href="/" class="header__btn__logo" title="Mega War">
+            <img class="header__logo" src="../img/sygnet.png" alt="Logo">
+            <p class="header__logo__text">
+                MEGA
+                <span class="header__logo__text--red">
+                WAR
+                </span>
+            </p>
+        </a>
+
+        <nav class="header__nav">
+            <ul class="header__nav__ul">
+                <li class="header__nav__li">
+                    <a href="/" class="header__nav__link" title="Home">HOME</a>
+                </li>
+                <li class="header__nav__li">
+                    <a href="/app/profile" class="header__nav__link" title="Profile">PROFILE</a>
+                </li>
+                <li class="header__nav__li">
+                    <a href="/app/arena" class="header__nav__link" title="Arena">ARENA</a>
+                </li>
+                <li class="header__nav__li">
+                    <a href="/rules" class="header__nav__link" title="Rules">RULES</a>
+                </li>
+                <li class="header__nav__li active">
+                    <a href="/ranking" class="header__nav__link" title="Ranking">RANKING</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="header__user-nav"></div>
+    </header>
+
+    <main class="container">
+        <h1 class="container__title">Ranking 🏆</h1>
+        <div class="container__ranking">
+            <div class="ranking-title">
+                <p class="ranking-title-place">Place</p>
+                <p class="ranking-title-username">Username</p>
+                <p class="ranking-title-nation">Nation</p>
+                <p class="ranking-title-wins">Wins</p>
+                <p class="ranking-title-defeats">Defeats</p>
+            </div>
+            <div class="ranking">
+                <ol class="ranking-ol">
+                    <li class="ranking-li">
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <a href="https://github.com/tomaszburas" class="footer__text" title="GitHub">
+            © Tomaszenko
+        </a>
+    </footer>
+</div>
+
+<script type="module" src="../dist/client/ts/utils/header-init.js"></script>
+<script type="module" src="../dist/client/ts/page/ranking.js"></script>
+</body>
+</html>

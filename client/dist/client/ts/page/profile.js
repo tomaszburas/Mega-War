@@ -25,18 +25,18 @@ const resultsContainer = document.querySelector('.container__results');
     const res = yield fetch('/app/profile/hero');
     const userData = yield res.json();
     username.textContent = userData.username;
-    breed.textContent = userData.warrior;
+    breed.textContent = userData.nation;
     wins.textContent = userData.wins;
     loses.textContent = userData.loses;
     strength.textContent = userData.strength;
     defense.textContent = userData.defense;
     resilience.textContent = userData.resilience;
     agility.textContent = userData.agility;
-    warriorImg.src = `../img/warriors/right/r-${userData.warrior}.jpg`;
+    warriorImg.src = `../img/warriors/right/r-${userData.nation}.jpg`;
     const total = 13 - (userData.strength + userData.defense + userData.resilience + userData.agility);
     totalPoints.textContent = `${total}`;
     const btn = document.querySelector('.btn');
-    configurePoints(userData.warrior, false);
+    configurePoints(userData.nation, false);
     // SAVE BUTTON
     btn.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
         const strength = document.querySelector('.strength');
@@ -73,7 +73,7 @@ const resultsContainer = document.querySelector('.container__results');
                 const total = 13 - (userData.strength + userData.defense + userData.resilience + userData.agility);
                 totalPoints.textContent = `${total}`;
                 signBuilder();
-                configurePoints(userData.warrior, false);
+                configurePoints(userData.nation, false);
             }
         }
     }));

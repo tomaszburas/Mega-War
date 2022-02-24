@@ -20,7 +20,7 @@ const userSchema = new Schema({
         agility: { type: Number, default: 0 },
         date: { type: Date },
     },
-    warrior: { type: String, default: '' },
+    nation: { type: String, default: '' },
     wins: { type: Number, default: 0 },
     loses: { type: Number, default: 0 },
 });

@@ -26,14 +26,14 @@ btn.addEventListener('click', async () => {
     const defense = document.querySelector('.defense');
     const resilience = document.querySelector('.resilience');
     const agility = document.querySelector('.agility');
-    const warriors = [...document.querySelectorAll('input[name="warrior"]')] as HTMLInputElement[];
-    const warriorName = ['aztec', 'celt', 'chinese', 'egyptian', 'greek', 'indian', 'slavic', 'viking']
+    const nations = [...document.querySelectorAll('input[name="nation"]')] as HTMLInputElement[];
+    const nationName = ['aztec', 'celt', 'chinese', 'egyptian', 'greek', 'indian', 'slavic', 'viking']
 
     const total = (+strength.textContent) + (+defense.textContent) + (+resilience.textContent) + (+agility.textContent);
 
-    const warrior = warriors.find(warrior => warrior.getAttribute('checked') === 'true')
+    const nation = nations.find(nation => nation.getAttribute('checked') === 'true')
 
-    if (total >= 14 || total <= 6 || !warriorName.find(hero => hero === warrior.value)) {
+    if (total >= 14 || total <= 6 || !nationName.find(hero => hero === nation.value)) {
         alertMsgNegative('Please don\'t cheat');
     } else {
         const res = await fetch('/app/configurator', {
@@ -46,7 +46,7 @@ btn.addEventListener('click', async () => {
                 defense: defense.textContent,
                 resilience: resilience.textContent,
                 agility: agility.textContent,
-                warrior: warrior.value,
+                nation: nation.value,
             })
         })
         if (res.status === 200) {

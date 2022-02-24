@@ -34,7 +34,7 @@ export function fight(player1, player2) {
     resultsLog[resultsLog.length - 1] = `<b>${winner.username}</b> dealt ${winner.params.strength} damage. <b>${loser.username}</b> died ☠`;
     return {
         winner: winner.username,
-        winnerNation: winner.warrior,
+        winnerNation: winner.nation,
         loser: loser.username,
         resultsLog,
     };

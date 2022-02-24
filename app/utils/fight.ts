@@ -49,7 +49,7 @@ export function fight(player1: User, player2: User): battleReturn {
 
     return {
         winner: winner.username,
-        winnerNation: winner.warrior,
+        winnerNation: winner.nation,
         loser: loser.username,
         resultsLog,
     }

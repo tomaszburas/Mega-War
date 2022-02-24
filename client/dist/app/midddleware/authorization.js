@@ -8,7 +8,7 @@ export function checkAuth(req, res, next) {
             req.user = {
                 id: decoded.id,
                 username: decoded.username,
-                warrior: decoded.warrior,
+                nation: decoded.nation,
             };
             next();
         }
@@ -43,7 +43,7 @@ export function getUser(req, res, next) {
             req.user = {
                 id: decoded.id,
                 username: decoded.username,
-                warrior: decoded.warrior,
+                nation: decoded.nation,
             };
             next();
         }

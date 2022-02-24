@@ -31,11 +31,11 @@ btn.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* 
     const defense = document.querySelector('.defense');
     const resilience = document.querySelector('.resilience');
     const agility = document.querySelector('.agility');
-    const warriors = [...document.querySelectorAll('input[name="warrior"]')];
-    const warriorName = ['aztec', 'celt', 'chinese', 'egyptian', 'greek', 'indian', 'slavic', 'viking'];
+    const nations = [...document.querySelectorAll('input[name="nation"]')];
+    const nationName = ['aztec', 'celt', 'chinese', 'egyptian', 'greek', 'indian', 'slavic', 'viking'];
     const total = (+strength.textContent) + (+defense.textContent) + (+resilience.textContent) + (+agility.textContent);
-    const warrior = warriors.find(warrior => warrior.getAttribute('checked') === 'true');
-    if (total >= 14 || total <= 6 || !warriorName.find(hero => hero === warrior.value)) {
+    const nation = nations.find(nation => nation.getAttribute('checked') === 'true');
+    if (total >= 14 || total <= 6 || !nationName.find(hero => hero === nation.value)) {
         alertMsgNegative('Please don\'t cheat');
     }
     else {
@@ -49,7 +49,7 @@ btn.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* 
                 defense: defense.textContent,
                 resilience: resilience.textContent,
                 agility: agility.textContent,
-                warrior: warrior.value,
+                nation: nation.value,
             })
         });
         if (res.status === 200) {

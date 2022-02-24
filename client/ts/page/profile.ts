@@ -21,7 +21,7 @@ const resultsContainer = document.querySelector('.container__results') as HTMLDi
     const userData = await res.json();
 
     username.textContent = userData.username;
-    breed.textContent = userData.warrior;
+    breed.textContent = userData.nation;
 
     wins.textContent = userData.wins;
     loses.textContent = userData.loses;
@@ -31,14 +31,14 @@ const resultsContainer = document.querySelector('.container__results') as HTMLDi
     resilience.textContent = userData.resilience;
     agility.textContent = userData.agility;
 
-    warriorImg.src = `../img/warriors/right/r-${userData.warrior}.jpg`;
+    warriorImg.src = `../img/warriors/right/r-${userData.nation}.jpg`;
 
     const total = 13 - (userData.strength + userData.defense + userData.resilience + userData.agility);
     totalPoints.textContent = `${total}`;
 
     const btn = document.querySelector('.btn');
 
-    configurePoints(userData.warrior, false);
+    configurePoints(userData.nation, false);
 
     // SAVE BUTTON
     btn.addEventListener('click', async () => {
@@ -78,7 +78,7 @@ const resultsContainer = document.querySelector('.container__results') as HTMLDi
                 totalPoints.textContent = `${total}`;
 
                 signBuilder();
-                configurePoints(userData.warrior, false);
+                configurePoints(userData.nation, false);
             }
         }
     })

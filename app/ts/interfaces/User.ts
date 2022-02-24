@@ -11,7 +11,7 @@ export interface User {
         agility: number;
         date: Date;
     };
-    warrior: string;
+    nation: string;
     wins: number;
     loses: number;
     __v?: number;

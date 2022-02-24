@@ -31,14 +31,14 @@ let player2Username = '';
     const res = yield fetch('/app/arena/player1');
     const userData = yield res.json();
     player1Name.textContent = userData.username;
-    player1Img.src = `../img/warriors/right/r-${userData.warrior}.svg`;
+    player1Img.src = `../img/warriors/right/r-${userData.nation}.svg`;
 }))();
 // 2 PLAYER INIT USERNAME
-function player2Init(username, breed) {
+function player2Init(username, nation) {
     findOpponentBox.style.display = 'none';
     player2.style.display = 'flex';
     player2Name.textContent = username;
-    player2Img.src = `../img/warriors/left/l-${breed}.svg`;
+    player2Img.src = `../img/warriors/left/l-${nation}.svg`;
     startFightBtn.style.display = 'flex';
 }
 function findOpponent() {
@@ -55,7 +55,7 @@ function findOpponent() {
         if (res.status === 200) {
             const data = yield res.json();
             player2Username = data.username;
-            player2Init(data.username, data.warrior);
+            player2Init(data.username, data.nation);
         }
         else {
             const { error } = yield res.json();
@@ -72,7 +72,7 @@ function findOpponentRandom() {
         if (res.status === 200) {
             const data = yield res.json();
             player2Username = data.username;
-            player2Init(data.username, data.warrior);
+            player2Init(data.username, data.nation);
         }
         else {
             const { error } = yield res.json();

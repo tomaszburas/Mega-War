@@ -28,7 +28,7 @@ export class AppController {
                 defense: user.params.defense,
                 resilience: user.params.resilience,
                 agility: user.params.agility,
-                warrior: user.warrior,
+                nation: user.nation,
                 wins: user.wins,
                 loses: user.loses,
                 battleResults: battleResultsArr,
@@ -55,7 +55,7 @@ export class AppController {
     }
 
     static async configureWarrior(req: Request, res: Response, next: NextFunction) {
-        const {strength, defense, resilience, agility, warrior} = req.body;
+        const {strength, defense, resilience, agility, nation} = req.body;
 
         try {
             const user = await User.findOne({_id: req.user.id})
@@ -73,14 +73,14 @@ export class AppController {
             user.params.resilience = resilience;
             user.params.agility = agility;
             user.params.date = Date.now()
-            user.warrior = warrior? warrior : user.warrior;
+            user.nation = nation? nation : user.nation;
 
             await user.save();
 
             const payload = {
                 username: user.username,
                 id: String(user._id),
-                warrior: user.warrior,
+                nation: user.nation,
             }
 
             const token = jwt.sign(payload, ACCESS_TOKEN, {expiresIn: "1d"});
@@ -114,7 +114,7 @@ export class AppController {
 
             const userData = {
                 username: user.username,
-                warrior: user.warrior,
+                nation: user.nation,
             }
 
             res
@@ -135,7 +135,7 @@ export class AppController {
         try {
             const user = await User.findOne({username: String(req.body.username)})
             if (!user) throw new UserError('User with the given username does not exist')
-            if (req.user.warrior === user.warrior) throw new UserError('You cannot fight an opponent of the same nation')
+            if (req.user.nation === user.nation) throw new UserError('You cannot fight an opponent of the same nation')
 
             // LAST BATTLE
             const [lastBattle] = await Battle
@@ -172,7 +172,7 @@ export class AppController {
 
             const userData = {
                 username: user.username,
-                warrior: user.warrior,
+                nation: user.nation,
             }
 
             res
@@ -191,7 +191,7 @@ export class AppController {
 
     static async arenaPlayer2Random(req: Request, res: Response, next: NextFunction) {
         try {
-            const users = await User.find({username: {$ne: req.user.username}, warrior: {$ne: req.user.warrior}});
+            const users = await User.find({username: {$ne: req.user.username}, warrior: {$ne: req.user.nation}});
             const battles = await Battle.find({$or: [{winner: req.user.username}, {loser: req.user.username}]}).sort({_id: -1})
 
             // LAST BATTLE
@@ -233,7 +233,7 @@ export class AppController {
             const randomIndex = Math.floor(Math.random() * usersFitToFight.length);
             const userData = {
                 username: usersFitToFight[randomIndex].username,
-                warrior: usersFitToFight[randomIndex].warrior,
+                nation: usersFitToFight[randomIndex].nation,
             }
             res
                 .status(200)
@@ -265,6 +265,7 @@ export class AppController {
             const battle = new Battle({
                 winner: data.winner,
                 loser: data.loser,
+                date: new Date(),
             })
 
             await battle.save();

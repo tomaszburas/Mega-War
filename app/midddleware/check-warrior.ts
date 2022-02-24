@@ -7,7 +7,7 @@ export function checkNotWarrior(req: Request, res: Response, next: NextFunction)
     if (access_token) {
         try {
             const decoded = jwt.verify(access_token, ACCESS_TOKEN) as any;
-            decoded.warrior? next() : res.redirect('/app/configurator');
+            decoded.nation? next() : res.redirect('/app/configurator');
         } catch (err) {
             next(err);
         }
@@ -21,7 +21,7 @@ export function checkWarrior(req: Request, res: Response, next: NextFunction) {
     if (access_token) {
         try {
             const decoded = jwt.verify(access_token, ACCESS_TOKEN) as any;
-            decoded.warrior? res.redirect('/app/profile') : next();
+            decoded.nation? res.redirect('/app/profile') : next();
         } catch (err) {
             next(err);
         }

@@ -26,15 +26,15 @@ let player2Username = '';
     const userData = await res.json();
 
     player1Name.textContent = userData.username;
-    player1Img.src = `../img/warriors/right/r-${userData.warrior}.svg`;
+    player1Img.src = `../img/warriors/right/r-${userData.nation}.svg`;
 })();
 
 // 2 PLAYER INIT USERNAME
-function player2Init(username: string, breed: string): void {
+function player2Init(username: string, nation: string): void {
     findOpponentBox.style.display = 'none';
     player2.style.display = 'flex';
     player2Name.textContent = username;
-    player2Img.src = `../img/warriors/left/l-${breed}.svg`;
+    player2Img.src = `../img/warriors/left/l-${nation}.svg`;
     startFightBtn.style.display = 'flex';
 }
 
@@ -52,7 +52,7 @@ async function findOpponent() {
     if (res.status === 200) {
         const data = await res.json();
         player2Username = data.username;
-        player2Init(data.username, data.warrior)
+        player2Init(data.username, data.nation);
     } else {
         const {error} = await res.json();
         typeof error === 'string' ? alertMsgNegative(error) : alertMsgNegative(error[0]);
@@ -68,7 +68,7 @@ async function findOpponentRandom() {
     if (res.status === 200) {
         const data = await res.json();
         player2Username = data.username;
-        player2Init(data.username, data.warrior)
+        player2Init(data.username, data.nation);
     } else {
         const {error} = await res.json();
         typeof error === 'string' ? alertMsgNegative(error) : alertMsgNegative(error[0]);
