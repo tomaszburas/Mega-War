@@ -144,4 +144,10 @@ export class MainController {
             }
         }
     }
+
+    static rulesPage(req: Request, res: Response) {
+        res.sendFile('rules.html', {
+            root: join(__dirname, '../../client/html')
+        })
+    }
 }

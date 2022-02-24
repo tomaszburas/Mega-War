@@ -1,0 +1,30 @@
+@import "../main.css";
+
+.container__rules {
+    width: 80%;
+    height: 80%;
+    background-color: var(--color-02);
+    padding: var(--padding-base);
+    overflow-y: auto;
+}
+
+.container__rules::-webkit-scrollbar {
+    width: 10px;
+}
+
+.container__rules::-webkit-scrollbar-track {
+    background-color: #e4e4e4;
+}
+
+.container__rules::-webkit-scrollbar-thumb {
+    background-color: var(--color-05);
+}
+
+.rules-ol {
+    list-style-type: decimal;
+    padding-left: var(--padding-base)
+}
+
+.rules-title {
+    font-weight: bold;
+}

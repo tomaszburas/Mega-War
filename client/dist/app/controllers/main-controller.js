@@ -144,5 +144,10 @@ export class MainController {
             }
         });
     }
+    static rulesPage(req, res) {
+        res.sendFile('rules.html', {
+            root: join(__dirname, '../../client/html')
+        });
+    }
 }
 //# sourceMappingURL=main-controller.js.map

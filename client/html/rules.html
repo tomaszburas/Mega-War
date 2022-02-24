@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--CSS-->
+    <link rel="stylesheet" href="../css/pages/rules.css" />
+    <!--FONT-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!--ANIMATION-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <title>Mega War</title>
+</head>
+<body>
+<div class="wrapper">
+    <header class="header">
+        <a href="/" class="header__btn__logo" title="Mega War">
+            <img class="header__logo" src="../img/sygnet.png" alt="Logo">
+            <p class="header__logo__text">
+                MEGA
+                <span class="header__logo__text--red">
+                WAR
+                </span>
+            </p>
+        </a>
+
+        <nav class="header__nav">
+            <ul class="header__nav__ul">
+                <li class="header__nav__li">
+                    <a href="/" class="header__nav__link" title="Home">HOME</a>
+                </li>
+                <li class="header__nav__li">
+                    <a href="/app/profile" class="header__nav__link" title="Profile">PROFILE</a>
+                </li>
+                <li class="header__nav__li">
+                    <a href="/app/arena" class="header__nav__link" title="Arena">ARENA</a>
+                </li>
+                <li class="header__nav__li active">
+                    <a href="/rules" class="header__nav__link" title="Rules">RULES</a>
+                </li>
+                <li class="header__nav__li">
+                    <a href="/ranking" class="header__nav__link" title="Ranking">RANKING</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="header__user-nav"></div>
+    </header>
+
+    <main class="container">
+        <h1 class="container__title">Rules 📄</h1>
+        <div class="container__rules">
+            <p class="rules-title">Registration</p>
+            <ol class="rules-ol">
+                <li class="rules-li">Username must be longer than 3 characters.</li>
+                <li class="rules-li">Password must contains minimum 5 characters, at least one letter and one number.</li>
+            </ol>
+
+            <p class="rules-title">Profile</p>
+            <ol class="rules-ol">
+                <li class="rules-li">You can save changes to the configuration of warrior skills after 3 hours have passed since the last change.</li>
+            </ol>
+
+            <p class="rules-title">Battle</p>
+            <ol class="rules-ol">
+                <li class="rules-li">At the beginning, everyone has as many health points (HP) as their toughness * 10. Everyone has as many shields (DP) as their defense value.</li>
+                <li class="rules-li">The warrior that starts makes an attack equal to his strength.</li>
+                <li class="rules-li">
+                    If the attacked warrior has shield + agility greater than attack power, then:
+                    <ol class="rules-ol">
+                        <li class="rules-li">
+                            A shield in the amount of attack is taken from him.
+                            <ol class="rules-ol">
+                                <li class="rules-li">If the attack was greater than the shield, the remaining amount of attack strength is deducted from its health.</li>
+                                <li class="rules-li">If the attack was up to the current target, no life is deducted.</li>
+                            </ol>
+                        </li>
+                        <li class="rules-li">If condition 3 is not met, we simply subtract the attack from life.</li>
+                    </ol>
+                </li>
+                <li class="rules-li">The order is changed and the attacker is now attacked and the attacker is attacked.</li>
+                <li class="rules-li">Repeat points 2 - 4 until someone dies, i.e. his HP drops to min. 0. When one of the fighters dies, the attacker is the winner.</li>
+                <li class="rules-li">You can start a new battle after 60 seconds have elapsed since the last battle.</li>
+                <li class="rules-li">You can start a new battle with the same user after 1 hour has elapsed since the last battle.</li>
+            </ol>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <a href="https://github.com/tomaszburas" class="footer__text" title="GitHub">
+            © Tomaszenko
+        </a>
+    </footer>
+</div>
+
+<script type="module" src="../dist/client/ts/utils/header-init.js"></script>
+</body>
+</html>

@@ -104,15 +104,9 @@
 .fight__box {
     height: 100%;
     padding-left: var(--padding-base);
-    /*display: flex;*/
-    /*justify-content: center;*/
     width: 100%;
     overflow-y: auto;
     background: var(--color-02);
-}
-
-.fight-ol {
-    /*padding-left: var(--padding-lg);*/
 }
 
 .fight__results {

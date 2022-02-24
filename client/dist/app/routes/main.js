@@ -10,6 +10,7 @@ mainRouter
     .get('/logout', MainController.logout)
     .get('/ranking', MainController.rankingPage)
     .get('/get-ranking', MainController.ranking)
+    .get('/rules', MainController.rulesPage)
     .get('*', MainController.notFoundPage)
     .post('/sign-up', MainController.signUp)
     .post('/sign-in', MainController.signIn);
