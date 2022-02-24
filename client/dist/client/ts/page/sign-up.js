@@ -13,6 +13,9 @@ const formSubmit = formWrapper.querySelector('.btn');
 formSubmit.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
     const username = formWrapper.querySelector('input[name="username"]');
     const password = formWrapper.querySelector('input[name="password"]');
+    if (username.value.length > 30) {
+        return alertMsgNegative('Username cannot exceed 30 characters');
+    }
     if (!username.value || !password.value) {
         return alertMsgNegative('Please enter your details');
     }

@@ -7,6 +7,10 @@ formSubmit.addEventListener('click', async () => {
     const username: HTMLInputElement = formWrapper.querySelector('input[name="username"]');
     const password: HTMLInputElement = formWrapper.querySelector('input[name="password"]');
 
+    if (username.value.length > 30) {
+        return alertMsgNegative('Username cannot exceed 30 characters');
+    }
+
     if (!username.value || !password.value) {
         return alertMsgNegative('Please enter your details');
     } else {
