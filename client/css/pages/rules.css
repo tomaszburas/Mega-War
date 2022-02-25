@@ -28,3 +28,9 @@
 .rules-title {
     font-weight: bold;
 }
+
+@media screen and (max-width: 800px) {
+    .container__rules {
+        width: 100%;
+    }
+}
