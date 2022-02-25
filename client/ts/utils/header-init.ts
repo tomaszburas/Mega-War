@@ -20,11 +20,24 @@ const headerAuth = `
 function initializeHeader(): void {
     window.addEventListener('load', async () => {
         const header = document.querySelector('.header__user-nav');
+        const hamburgerMenuLi = document.querySelector('.hamburger__user-nav');
+        const hamburgerMenu = document.querySelector('.hamburger-menu-icon');
+        const hamburgerMenuElements = document.querySelector('.hamburger-menu-elements') as HTMLDivElement;
+        const hamburgerMenuClose = document.querySelector('.hamburger-menu-close');
+
+        hamburgerMenu.addEventListener('click', () => {
+            hamburgerMenuElements.style.display = 'flex';
+        })
+
+        hamburgerMenuClose.addEventListener('click', () => {
+            hamburgerMenuElements.style.display = 'none';
+        })
 
         const res = await fetch('/check-authorization');
         const user = await res.json();
 
         user ? header.innerHTML = headerAuth : header.innerHTML = headerNoAuth;
+        user ? hamburgerMenuLi.innerHTML = headerAuth : hamburgerMenuLi.innerHTML = headerNoAuth;
     });
 }
 

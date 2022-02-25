@@ -27,9 +27,20 @@ const headerAuth = `
 function initializeHeader() {
     window.addEventListener('load', () => __awaiter(this, void 0, void 0, function* () {
         const header = document.querySelector('.header__user-nav');
+        const hamburgerMenuLi = document.querySelector('.hamburger__user-nav');
+        const hamburgerMenu = document.querySelector('.hamburger-menu-icon');
+        const hamburgerMenuElements = document.querySelector('.hamburger-menu-elements');
+        const hamburgerMenuClose = document.querySelector('.hamburger-menu-close');
+        hamburgerMenu.addEventListener('click', () => {
+            hamburgerMenuElements.style.display = 'flex';
+        });
+        hamburgerMenuClose.addEventListener('click', () => {
+            hamburgerMenuElements.style.display = 'none';
+        });
         const res = yield fetch('/check-authorization');
         const user = yield res.json();
         user ? header.innerHTML = headerAuth : header.innerHTML = headerNoAuth;
+        user ? hamburgerMenuLi.innerHTML = headerAuth : hamburgerMenuLi.innerHTML = headerNoAuth;
     }));
 }
 initializeHeader();
