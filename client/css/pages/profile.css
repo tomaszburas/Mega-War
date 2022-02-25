@@ -167,3 +167,35 @@
     width: 30%;
 }
 
+@media screen and (max-height: 740px) {
+    .warrior-img {
+        width: 30%;
+    }
+}
+
+@media screen and (max-width: 950px) {
+    .container__left {
+        width: 35%;
+    }
+    .container__right {
+        width: 65%;
+    }
+    .container__results {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .container__left {
+        width: 45%;
+    }
+    .container__right {
+        width: 55%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .container {
+        font-size: var(--font-size-sm);
+    }
+}

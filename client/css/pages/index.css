@@ -59,7 +59,7 @@
 @media screen and (max-width: 800px) {
     .home-page__box {
         width: 100%;
-        margin-top: 10%;
+        margin-top: 20%;
         margin-bottom: 0;
     }
     .wrapper {
