@@ -8,6 +8,8 @@ function alertMsgPositive(string: string): void {
     txt.classList.add('alert-text-positive', 'animate__animated', 'animate__fadeInDown');
     txt.innerText = `🎉 ${string}`;
 
+    div.style.top = `${window.pageYOffset + 20}px`;
+
     div.appendChild(txt);
     body.appendChild(div);
 
@@ -29,6 +31,8 @@ function alertMsgNegative(string: string): void {
 
     txt.classList.add('alert-text-negative', 'animate__animated', 'animate__fadeInDown');
     txt.innerText = `📣 ${string}`;
+
+    div.style.top = `${window.pageYOffset + 20}px`;
 
     div.appendChild(txt);
     body.appendChild(div);
