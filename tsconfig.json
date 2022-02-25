@@ -10,8 +10,5 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "moduleResolution": "node",
-    "typeRoots": [
-      "./node_modules/@types/"
-    ]
   }
 }
