@@ -186,16 +186,24 @@
 }
 
 @media screen and (max-width: 700px) {
+    .container {
+        height: unset;
+    }
+    .container__box {
+        flex-direction: column-reverse;
+    }
     .container__left {
-        width: 45%;
+        width: 100%;
+        margin-top: var(--margin-base);
     }
     .container__right {
-        width: 55%;
+        width: 100%;
+        margin-left: unset;
     }
-}
-
-@media screen and (max-width: 500px) {
-    .container {
-        font-size: var(--font-size-sm);
+    .container__results {
+        max-height: 50vh;
+    }
+    .battle__li {
+        font-size: var(--font-size-base);
     }
 }

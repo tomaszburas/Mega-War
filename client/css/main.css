@@ -173,7 +173,7 @@
         cursor: pointer;
     }
     .hamburger-menu-elements {
-        position: absolute;
+        position: fixed;
         width: 100vw;
         height: 100vh;
         background-color: var(--color-02);
@@ -193,8 +193,6 @@
     .header__nav__li {
         display: flex;
         justify-content: center;
-    }
-    .header__nav__li {
         margin-right: 0 !important;
     }
     .hamburger__user-nav {
