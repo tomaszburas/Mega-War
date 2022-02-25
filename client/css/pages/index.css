@@ -23,7 +23,7 @@
     flex-direction: column;
     align-items: center;
     background: rgb(255,255,255);
-    background: linear-gradient(267deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.6) 100%);
+    background: linear-gradient(207deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.6) 100%);
     padding: var(--padding-sm);
 }
 

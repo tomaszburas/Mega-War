@@ -208,7 +208,7 @@ export class AppController {
                 if (fight) {
                     const timer = Math.abs(Date.now() - fight.date);
                     const hours = Math.floor(timer / (60*60*1000));
-                    if (hours > 1) usersFitToFight.push(user);
+                    if (hours >= 1) usersFitToFight.push(user);
                 } else {
                     usersFitToFight.push(user);
                 }

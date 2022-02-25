@@ -164,6 +164,7 @@
 
     .hamburger-menu {
         display: flex;
+        z-index: 1;
     }
 
     /*HAMBURGER*/

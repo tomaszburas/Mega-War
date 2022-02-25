@@ -17,6 +17,7 @@ const resultUsername = document.querySelector('.results__username') as HTMLEleme
 const resultBreed = document.querySelector('.results__breed') as HTMLElement;
 const resultImg = document.querySelector('.results__img') as HTMLImageElement;
 const resultOl = document.querySelector('.fight-ol') as HTMLElement;
+const arena = document.querySelector('.arena') as HTMLElement;
 
 let player2Username = '';
 
@@ -110,6 +111,7 @@ async function startFight() {
     }
 
     fightStatsDiv.style.display = 'flex';
+    arena.style.display = 'none';
 }
 startFightBtn.addEventListener('click', startFight);
 
@@ -121,6 +123,7 @@ function closeFightStats() {
     findOpponentInput.value = '';
     startFightBtn.style.display = 'none';
     resultOl.textContent = '';
+    arena.style.display = 'flex';
 }
 fightStatsCloseBtn.addEventListener('click', closeFightStats);
 

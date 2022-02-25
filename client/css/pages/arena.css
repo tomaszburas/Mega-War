@@ -62,7 +62,8 @@
 .arena__label {
     display: flex;
     flex-direction: column;
-    margin-right: var(--margin-sm)
+    margin-right: var(--margin-sm);
+    width: 100%;
 }
 
 .arena__label__txt {
@@ -102,9 +103,9 @@
 }
 
 .fight__box {
-    height: 100%;
     padding-left: var(--padding-base);
     width: 100%;
+    height: 100%;
     overflow-y: auto;
     background: var(--color-02);
 }
@@ -176,5 +177,61 @@
     }
 }
 
+@media screen and (max-width: 800px) {
+    .arena {
+        background-size: 140%;
+    }
+    .container__wrapper {
+        flex-direction: column-reverse;
+        align-items: center;
+        padding-left: var(--padding-sm);
+        position: relative;
+        justify-content: space-around;
+    }
+    .fight__stats {
+        width: 100%;
+        height: 60%;
+    }
+    .fight__box {
+        padding-left: 0;
+    }
+    .fight__results {
+        width: 100%;
+        /*height: 45%;*/
+    }
+    .results__box {
+        width: 80%;
+    }
+    .results__img {
+        display: none;
+    }
+    .results__breed {
+        margin-bottom: var(--margin-sm);
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .arena {
+        background-size: 170%;
+    }
+    .container {
+        font-size: var(--font-size-sm);
+    }
+    .opponent__title {
+        font-size: var(--font-size-base);
+    }
+    .arena__opponent {
+        width: 35%;
+    }
+    .player {
+        width: 35%;
+    }
+    .opponent__username{
+        flex-direction: column;
+    }
+    .results__box {
+        font-size: var(--font-size-lg);
+    }
+}
 
 

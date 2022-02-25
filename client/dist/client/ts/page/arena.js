@@ -25,6 +25,7 @@ const resultUsername = document.querySelector('.results__username');
 const resultBreed = document.querySelector('.results__breed');
 const resultImg = document.querySelector('.results__img');
 const resultOl = document.querySelector('.fight-ol');
+const arena = document.querySelector('.arena');
 let player2Username = '';
 // 1 PLAYER INIT
 (() => __awaiter(void 0, void 0, void 0, function* () {
@@ -111,6 +112,7 @@ function startFight() {
             findOpponentInput.value = '';
         }
         fightStatsDiv.style.display = 'flex';
+        arena.style.display = 'none';
     });
 }
 startFightBtn.addEventListener('click', startFight);
@@ -122,6 +124,7 @@ function closeFightStats() {
     findOpponentInput.value = '';
     startFightBtn.style.display = 'none';
     resultOl.textContent = '';
+    arena.style.display = 'flex';
 }
 fightStatsCloseBtn.addEventListener('click', closeFightStats);
 //# sourceMappingURL=arena.js.map
