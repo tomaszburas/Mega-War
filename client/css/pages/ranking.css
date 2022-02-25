@@ -54,3 +54,11 @@
 .ranking-title-defeats {
     width: 12%;
 }
+
+@media screen and (max-width: 750px) {
+    .container__ranking {
+        font-size: var(--font-size-base);
+        width: 100%;
+        padding: var(--padding-sm);
+    }
+}
