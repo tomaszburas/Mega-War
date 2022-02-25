@@ -1,7 +1,7 @@
 @import "../main.css";
 
 .wrapper {
-    background-image: url("../../img/bg2.svg");
+    background-image: url("../../img/bg.svg");
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center bottom;
