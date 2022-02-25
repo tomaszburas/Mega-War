@@ -2,7 +2,7 @@
   "name": "mega-war",
   "version": "1.0.0",
   "description": "",
-  "main": "./app/server.ts",
+  "main": "./app/server",
   "scripts": {
     "start": "ts-node ./app/server.ts",
     "start:dev": "tsnd ./app/server.ts"
