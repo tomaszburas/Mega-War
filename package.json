@@ -2,10 +2,11 @@
   "name": "mega-war",
   "version": "1.0.0",
   "description": "",
-  "main": "./app/server.ts",
+  "type": "module",
+  "main": "./client/dist/server.js",
   "scripts": {
-    "start": "ts-node ./app/server.ts",
-    "start:dev": "tsnd ./app/server.ts"
+    "start": "node ./client/dist/server.js",
+    "start:dev": "tsnd server.ts"
   },
   "repository": {
     "type": "git",
@@ -24,17 +25,16 @@
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.3.1",
-    "mongoose": "^6.2.1",
-    "ts-node": "^10.4.0",
-    "typescript": "^4.5.5"
+    "mongoose": "^6.2.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/cookie-parser": "^1.4.2",
-    "@types/express": "^4.17.13",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/node": "^17.0.14",
     "dotenv": "^16.0.0",
-    "ts-node-dev": "^1.1.8"
+    "ts-node-dev": "^1.1.8",
+    "ts-node": "^10.4.0",
+    "@types/express": "^4.17.13"
   }
 }
