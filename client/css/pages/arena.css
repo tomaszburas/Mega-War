@@ -140,7 +140,7 @@
     text-align: center;
 }
 
-.results__breed {
+.results__nation {
     background-color: var(--color-05);
     width: 100%;
     text-align: center;
@@ -204,7 +204,7 @@
     .results__img {
         display: none;
     }
-    .results__breed {
+    .results__nation {
         margin-bottom: var(--margin-sm);
     }
     .fight-ol {

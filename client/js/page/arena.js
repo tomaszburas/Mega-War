@@ -14,7 +14,7 @@ const findOpponentInput = document.querySelector('.label__input');
 const findOpponentBox = document.querySelector('.arena__opponent');
 const findOpponentBtnRandom = document.querySelector('.random-opponent');
 const resultUsername = document.querySelector('.results__username');
-const resultBreed = document.querySelector('.results__breed');
+const resultNation = document.querySelector('.results__nation');
 const resultImg = document.querySelector('.results__img');
 const resultOl = document.querySelector('.fight-ol');
 const arena = document.querySelector('.arena');
@@ -93,7 +93,7 @@ async function startFight() {
         const data = await res.json();
 
         resultUsername.textContent = data.winner;
-        resultBreed.textContent = data.winnerNation;
+        resultNation.textContent = data.winnerNation;
         resultImg.src = `../img/warriors/right/r-${data.winnerNation}.jpg`;
 
         data.resultsLog.forEach((result) => {
