@@ -12,8 +12,5 @@
     "moduleResolution": "node",
     "module": "esnext",
     "allowSyntheticDefaultImports": true,
-    //    "typeRoots": ["node_modules/@types"],
-//    "module": "commonjs"
   },
-//  "exclude": ["node_modules"]
 }
