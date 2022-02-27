@@ -143,6 +143,7 @@ export class AppController {
             const user = await User.findOne({username: String(req.body.username)})
             if (!user) throw new UserError('User with the given username does not exist')
             if (req.user.nation === user.nation) throw new UserError('You cannot fight an opponent of the same nation')
+            if (!user.nation) throw new UserError('You cannot fight this opponent')
 
             // LAST BATTLE WITH OPPONENT
             const [userBattles] = await Battle
@@ -198,7 +199,8 @@ export class AppController {
 
     static async arenaPlayer2Random(req: Request, res: Response, next: NextFunction) {
         try {
-            const users = await User.find({username: {$ne: req.user.username}, nation: {$ne: req.user.nation}});
+            const users = await User.find({username: {$ne: req.user.username},
+                $and: [{nation: {$ne: req.user.nation}}, {nation: {$ne: ''}}]});
             const battles = await Battle.find({$or: [{winner: req.user.username}, {loser: req.user.username}]}).sort({_id: -1})
 
             // LAST BATTLE WITH THIS SAME USER
