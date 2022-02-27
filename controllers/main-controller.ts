@@ -72,7 +72,7 @@ export class MainController {
 
             const token = jwt.sign(payload, ACCESS_TOKEN, {expiresIn: "1d"});
 
-            if (user.warrior) {
+            if (user.nation) {
                 res.status(200)
             } else {
                 res.status(301)
