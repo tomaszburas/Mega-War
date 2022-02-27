@@ -1,7 +1,7 @@
 {
   "name": "mega-war",
   "version": "1.0.0",
-  "description": "",
+  "description": "Browser game in which the user plays the role of a warrior.",
   "type": "module",
   "main": "./client/dist/server.js",
   "scripts": {
@@ -12,12 +12,8 @@
     "type": "git",
     "url": "git+https://github.com/tomaszburas/Mega-War.git"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Tomaszenko",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/tomaszburas/Mega-War/issues"
-  },
   "homepage": "https://github.com/tomaszburas/Mega-War#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
