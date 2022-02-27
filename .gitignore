@@ -2,3 +2,4 @@ node_modules/
 Folder_Roboczy/
 .env
 .idea/
+client/dist
