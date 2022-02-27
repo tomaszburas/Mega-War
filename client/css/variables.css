@@ -1,5 +1,4 @@
 :root {
-    /* Dark Mode */
     --color-01: #242424;
     --color-02: #FFFFFF;
     --color-03: #A12A3D;
@@ -15,15 +14,10 @@
     --font-size-3xl: 3.6rem;
     --font-size-4xl: 6rem;
 
-    /* Test variables */
     --padding-sm: 1rem;
     --padding-base: 1.5rem;
     --padding-lg: 2rem;
     --padding-xl: 3rem;
-
-    --layout-padding-base: 5rem;
-
-    --transition-normal: 0.3s ease;
 
     --margin-sm: 1rem;
     --margin-base: 1.5rem;
