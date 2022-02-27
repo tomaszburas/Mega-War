@@ -195,6 +195,10 @@
         justify-content: center;
         margin-right: 0 !important;
     }
+    .header__nav__li:hover {
+        background-color: unset;
+        color: unset;
+    }
     .hamburger__user-nav {
         margin-top: var(--margin-base);
         color: var(--color-02);
