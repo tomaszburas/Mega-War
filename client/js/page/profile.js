@@ -2,7 +2,7 @@ import {alertMsgNegative, alertMsgPositive} from "../utils/alert.js";
 import {configurePoints, signBuilder} from "../utils/points-configurator.js";
 
 const username = document.querySelector('.label-username');
-const breed = document.querySelector('.label-breed');
+const nation = document.querySelector('.label-nation');
 const wins = document.querySelector('.label-wins');
 const loses = document.querySelector('.label-loses');
 const strength = document.querySelector('.strength');
@@ -21,7 +21,7 @@ const resultsContainer = document.querySelector('.container__results');
     const userData = await res.json();
 
     username.textContent = userData.username;
-    breed.textContent = userData.nation;
+    nation.textContent = userData.nation;
 
     wins.textContent = userData.wins;
     loses.textContent = userData.loses;
