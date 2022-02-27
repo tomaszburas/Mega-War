@@ -8,7 +8,7 @@ Browser game in which the user plays the role of a warrior.
 
 ### Frontend
 * html + css
-* typescript
+* javascript
 
 LIVE: [https://mega-war.herokuapp.com/](https://mega-war.herokuapp.com/ "Mega War")
 
