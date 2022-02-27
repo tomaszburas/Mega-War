@@ -6,7 +6,7 @@
   "main": "./client/dist/server.js",
   "scripts": {
     "start": "node ./client/dist/server.js",
-    "start:dev": "tsnd server.ts"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
