@@ -42,9 +42,14 @@ userSchema.path('username').set((value: string) => {
 });
 
 userSchema.post('save', function(error: MongoServerError, doc: any, next: NextFunction) {
+    if (error.name === 'ValidationError') {
+        error.message = (Object.values(error.errors).map((val: any) => val.message))[0] ;
+    }
+
     if (error.code === 11000) {
         error.message = 'This username exists in the database';
     }
+
     next(error);
 });
 

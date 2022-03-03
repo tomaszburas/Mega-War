@@ -1,5 +1,5 @@
 import {join} from "path";
-import {NextFunction, Request, Response} from "express";
+import {Request, Response} from "express";
 import jwt from "jsonwebtoken";
 
 import {User} from "../db/models/user.js";
@@ -27,71 +27,53 @@ export class MainController {
         })
     }
 
-    static async signUp(req: Request, res: Response, next: NextFunction) {
+    static async signUp(req: Request, res: Response) {
         const {username, password} = req.body;
 
-        try {
-            if (!validatePassword(password)) throw new UserError('Password must contains minimum 5 characters, at least one letter and one number')
+        if (!validatePassword(password)) throw new UserError('Password must contains minimum 5 characters, at least one letter and one number')
 
-            const newUser = new User({
-                username: String(username),
-                password: String(password),
-            });
+        const newUser = new User({
+            username: String(username),
+            password: String(password),
+        });
 
-            await newUser.save();
-            res
-                .status(200)
-                .end()
-        } catch (err) {
-            if (err.name === 'ValidationError') {
-                err.message = Object.values(err.errors).map((val: any) => val.message);
-                next(err)
-            } else {
-                next(err);
-            }
-        }
+        await newUser.save();
+        res
+            .status(200)
+            .end()
     }
 
-    static async signIn(req: Request, res: Response, next: NextFunction) {
-        try {
-            const user = await User.findOne({ username: String(req.body.username) });
-            if (!user) {
-                throw new UserError('User not found');
-            }
+    static async signIn(req: Request, res: Response) {
+        const user = await User.findOne({ username: String(req.body.username) });
+        if (!user) {
+            throw new UserError('User not found');
+        }
 
-            const isValidPassword = user.comparePassword(String(req.body.password));
-            if (!isValidPassword) {
-                throw new UserError('Password not valid');
-            }
+        const isValidPassword = user.comparePassword(String(req.body.password));
+        if (!isValidPassword) {
+            throw new UserError('Password not valid');
+        }
 
-            const payload = {
-                username: user.username,
-                id: String(user._id),
-                nation: user.nation,
-            }
+        const payload = {
+            username: user.username,
+            id: String(user._id),
+            nation: user.nation,
+        }
 
-            const token = jwt.sign(payload, ACCESS_TOKEN, {expiresIn: "1d"});
+        const token = jwt.sign(payload, ACCESS_TOKEN, {expiresIn: "1d"});
 
-            if (user.nation) {
-                res.status(200)
-            } else {
-                res.status(301)
-            }
+        if (user.nation) {
+            res.status(200)
+        } else {
+            res.status(301)
+        }
 
-            res
-                .cookie(`access_token`, `${token}`, {
+        res
+            .cookie(`access_token`, `${token}`, {
                 httpOnly: true,
                 maxAge: 24 * 60 * 60 * 1000,
             })
-                .end();
-        } catch (err) {
-            if (err.name === 'ValidationError') {
-                err.message = Object.values(err.errors).map((val: any) => val.message);
-                next(err)
-            } else {
-                next(err);
-            }
-        }
+            .end();
     }
 
     static logout(req: Request, res: Response) {
@@ -118,32 +100,22 @@ export class MainController {
         })
     }
 
-    static async ranking(req: Request, res: Response, next: NextFunction) {
-        try {
-            const users = await User.find({nation: {$ne: ''}}).sort({wins: -1})
+    static async ranking(req: Request, res: Response) {
+        const users = await User.find({nation: {$ne: ''}}).sort({wins: -1})
 
-            const data = users.map((user, i) => {
-                return {
-                    place: i+1,
-                    username: user.username,
-                    nation: user.nation,
-                    wins: user.wins,
-                    defeats: user.loses,
-                }
-            })
-
-            res
-                .status(200)
-                .json(data)
-
-        } catch (err) {
-            if (err.name === 'ValidationError') {
-                err.message = Object.values(err.errors).map((val: any) => val.message);
-                next(err)
-            } else {
-                next(err);
+        const data = users.map((user, i) => {
+            return {
+                place: i+1,
+                username: user.username,
+                nation: user.nation,
+                wins: user.wins,
+                defeats: user.loses,
             }
-        }
+        })
+
+        res
+            .status(200)
+            .json(data)
     }
 
     static rulesPage(req: Request, res: Response) {

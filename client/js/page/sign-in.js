@@ -29,7 +29,7 @@ formSubmit.addEventListener('click', async () => {
     }
     else {
         const {error} = await res.json();
-        typeof error === 'string' ? alertMsgNegative(error) : alertMsgNegative(error[0]);
+        alertMsgNegative(error);
         password.value = '';
     }
 });
